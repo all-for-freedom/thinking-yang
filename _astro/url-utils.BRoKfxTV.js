@@ -1,0 +1,1 @@
+import"./config.BsPxj_2H.js";import"./zh_TW.Jbo5k0IW.js";function u(n,t){const o=n.replace(/^\/|\/$/g,"").toLowerCase(),r=t.replace(/^\/|\/$/g,"").toLowerCase();return o===r}function e(...n){return n.join("/").replace(/\/+/g,"/")}function c(n){return a(`/posts/${n}/`)}function a(n){return e("","/thinking-yang/",n)}export{c as g,u as p,a as u};

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /_astro/
+
+Sitemap: https://all-for-freedom.github.io/sitemap-index.xml
