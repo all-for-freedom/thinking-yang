@@ -1,44 +1,51 @@
-name: Deploy to Pages Branch
+name: Deploy Astro site to GitHub Pages
 
 on:
-  # 每次推送到 `main` 分支时触发这个"工作流程"
-  # 如果你使用了别的分支名，请按需将 `main` 替换成你的分支名
   push:
-    branches: [ main ]
-  # 允许你在 GitHub 上的 Actions 标签中手动触发此"工作流程"
-  workflow_dispatch:
+    branches: ["main"]   # 👈 如果你的主分支不是 main，请改成你的分支名
+  workflow_dispatch:      # 手动触发也行
 
-# 需要写入权限来推送到pages分支
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Setup Node.js
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.14.4
-          run_install: false
-          
+          node-version: 20
+          cache: pnpm
+
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
-      
-      - name: Build site
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
         run: pnpm run build
-      
-      - name: Deploy to pages branch
-        uses: JamesIves/github-pages-deploy-action@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: pages # 部署到pages分支
-          folder: dist # Astro默认构建输出目录
-          clean: true # 清理目标分支中的旧文件
+          path: dist   # 👈 Astro 默认构建输出目录
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
