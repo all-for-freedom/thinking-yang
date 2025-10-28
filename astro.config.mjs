@@ -1,3 +1,4 @@
+import { defineConfig } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -29,7 +30,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 export default defineConfig({
 	site: "https://all-for-freedom.github.io/",
 
-	base: "/thinking-yang",
+	base: import.meta.env.DEV ? '/' : '/thinking-yang',
 	trailingSlash: "always",
 	integrations: [
 		tailwind({
