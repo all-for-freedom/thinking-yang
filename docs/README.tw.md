@@ -1,6 +1,8 @@
 # Thinking 🐑
 
-這是我的介面。
+這是你了解我的介面。
+
+website: [瀋陽的部落格](https://all-for-freedom.github.io/thinking-yang/)
 
 🌏 README 語言
 [**English**](../README.md) /

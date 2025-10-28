@@ -2,6 +2,8 @@
 
 This is my interface to you.
 
+website: [Shenyang's Blog](https://all-for-freedom.github.io/thinking-yang/)
+
 🌏 README Languages
 [**English**](./README.md) /
 [**中文**](./README.zh.md) /

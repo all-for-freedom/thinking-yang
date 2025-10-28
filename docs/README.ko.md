@@ -1,6 +1,8 @@
 # Thinking 🐑
 
-이것은 당신을 위한 제 인터페이스입니다.
+이것은 당신이 저를 알아가는 인터페이스입니다.
+
+website: [심양의 블로그](https://all-for-freedom.github.io/thinking-yang/)
 
 🌏 README 언어
 [**English**](../README.md) /

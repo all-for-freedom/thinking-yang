@@ -1,6 +1,8 @@
 # Thinking 🐑
 
-这是我的界面。
+这是你了解我的接口。
+
+website: [沈阳的博客](https://all-for-freedom.github.io/thinking-yang/)
 
 🌏 README 语言
 [**English**](./README.md) /

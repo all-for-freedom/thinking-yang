@@ -1,6 +1,8 @@
 # Thinking 🐑
 
-これは私のインターフェースです。
+これはあなたが私を知るためのインターフェースです。
+
+website: [瀋陽のブログ](https://all-for-freedom.github.io/thinking-yang/)
 
 🌏 README 言語
 [**English**](../README.md) /
