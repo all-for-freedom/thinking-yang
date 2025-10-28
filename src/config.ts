@@ -199,12 +199,6 @@ export const navBarConfig: NavBarConfig = {
 					external: true,
 					icon: "fa6-brands:github",
 				},
-				// {
-				// 	name: "Bilibili",
-				// 	url: "https://space.bilibili.com/3546745256544892",
-				// 	external: true,
-				// 	icon: "fa6-brands:bilibili",
-				// },
 				{
 					name: "Gitee",
 					url: "https://gitee.com/all-for-freedom",
@@ -219,7 +213,7 @@ export const navBarConfig: NavBarConfig = {
 			icon: "material-symbols:person",
 			children: [
 				// LinkPreset.Anime,
-				LinkPreset.Diary,
+				// LinkPreset.Diary,
 				{
 					name: "Albums",
 					url: "/albums/",
@@ -227,12 +221,13 @@ export const navBarConfig: NavBarConfig = {
 				},
 			],
 		},
-		{
-			name: "About",
-			url: "/content/",
-			icon: "material-symbols:info",
-			children: [LinkPreset.About, LinkPreset.Friends],
-		},
+		// {
+		// 	name: "About",
+		// 	url: "/content/",
+		// 	icon: "material-symbols:info",
+		// 	children: [LinkPreset.About, LinkPreset.Friends],
+		// },
+		LinkPreset.About,
 		{
 			name: "Others",
 			url: "#",
@@ -282,11 +277,6 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa6-brands:github",
 			url: "https://github.com/all-for-freedom",
 		},
-		// {
-		// 	name: "Codeberg",
-		// 	icon: "simple-icons:codeberg",
-		// 	url: "https://codeberg.org",
-		// },
 		{
 			name: "Discord",
 			icon: "fa6-brands:discord",
@@ -317,7 +307,7 @@ export const commentConfig: CommentConfig = {
 
 export const announcementConfig: AnnouncementConfig = {
 	title: "Announcement", // 公告标题
-	content: "Welcome to my blog! This is a sample announcement.", // 公告内容
+	content: "Welcome to my blog! 私の名前は沈陽です。", // 公告内容
 	closable: true, // 允许用户关闭公告
 	link: {
 		enable: true, // 启用链接
