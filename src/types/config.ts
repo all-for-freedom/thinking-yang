@@ -25,7 +25,6 @@ export type SiteConfig = {
 	// 特色页面开关配置
 	featurePages: {
 		diary: boolean; // 日记页面开关
-		friends: boolean; // 友链页面开关
 		projects: boolean; // 项目页面开关
 		skills: boolean; // 技能页面开关
 		timeline: boolean; // 时间线页面开关
@@ -121,12 +120,11 @@ export enum LinkPreset {
 	Home = 0,
 	Archive = 1,
 	About = 2,
-	Friends = 3,
-	Diary = 4,
-	Gallery = 5,
-	Projects = 6,
-	Skills = 7,
-	Timeline = 8,
+	Diary = 3,
+	Gallery = 4,
+	Projects = 5,
+	Skills = 6,
+	Timeline = 7,
 }
 
 export type NavBarLink = {

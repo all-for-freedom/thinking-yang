@@ -19,7 +19,6 @@ export const en: Translation = {
 	[Key.announcementClose]: "Close",
 
 	[Key.comments]: "Comments",
-	[Key.friends]: "Friends",
 	[Key.untitled]: "Untitled",
 	[Key.uncategorized]: "Uncategorized",
 	[Key.noTags]: "No Tags",

@@ -19,7 +19,6 @@ export const ja: Translation = {
 	[Key.announcementClose]: "閉じる",
 
 	[Key.comments]: "コメント",
-	[Key.friends]: "友達",
 	[Key.untitled]: "無題",
 	[Key.uncategorized]: "未分類",
 	[Key.noTags]: "タグなし",

@@ -33,7 +33,6 @@ export const siteConfig: SiteConfig = {
 	// 特色页面开关配置(关闭不在使用的页面有助于提升SEO,关闭后直接在顶部导航删除对应的页面就行)
 	featurePages: {
 		diary: true, // 日记页面开关
-		friends: true, // 友链页面开关
 		projects: true, // 项目页面开关
 		skills: true, // 技能页面开关
 		timeline: true, // 时间线页面开关
@@ -177,27 +176,6 @@ export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
 		LinkPreset.Archive,
-		// 支持自定义导航栏链接,并且支持多级菜单,3.1版本新加，多集彩蛋去看教程
-		// 这里的三个 link 就是导航栏的那个 link 下拉的链接，所以我其实应该放我最后 push 到代码仓库的链接才对
-		{
-			name: "Links",
-			url: "/links/",
-			icon: "material-symbols:link",
-			children: [
-				{
-					name: "GitHub",
-					url: "https://github.com/all-for-freedom",
-					external: true,
-					icon: "fa6-brands:github",
-				},
-				{
-					name: "Gitee",
-					url: "https://gitee.com/all-for-freedom",
-					external: true,
-					icon: "mdi:git",
-				},
-			],
-		},
 		{
 			name: "My",
 			url: "/content/",

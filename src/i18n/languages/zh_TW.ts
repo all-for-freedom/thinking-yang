@@ -19,7 +19,6 @@ export const zh_TW: Translation = {
 	[Key.announcementClose]: "關閉",
 
 	[Key.comments]: "評論",
-	[Key.friends]: "友鏈",
 	[Key.untitled]: "無標題",
 	[Key.uncategorized]: "未分類",
 	[Key.noTags]: "無標籤",
