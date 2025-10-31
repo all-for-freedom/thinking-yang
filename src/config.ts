@@ -177,20 +177,6 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		{
-			name: "My",
-			url: "/content/",
-			icon: "material-symbols:person",
-			children: [
-				LinkPreset.About,
-				LinkPreset.Diary,
-				{
-					name: "Albums",
-					url: "/albums/",
-					icon: "material-symbols:photo-library",
-				},
-			],
-		},
-		{
 			name: "Projects",
 			url: "/projects/",
 			icon: "material-symbols:work",
@@ -204,6 +190,20 @@ export const navBarConfig: NavBarConfig = {
 			name: "Timeline",
 			url: "/timeline/",
 			icon: "material-symbols:timeline",
+		},
+		{
+			name: "My",
+			url: "/content/",
+			icon: "material-symbols:person",
+			children: [
+				LinkPreset.About,
+				LinkPreset.Diary,
+				{
+					name: "Albums",
+					url: "/albums/",
+					icon: "material-symbols:photo-library",
+				},
+			],
 		},
 	],
 };
