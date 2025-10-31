@@ -42,23 +42,7 @@ export const zh_TW: Translation = {
 	[Key.author]: "作者",
 	[Key.publishedAt]: "發布於",
 	[Key.license]: "許可協議",
-	[Key.anime]: "追番",
 	[Key.diary]: "日記",
-
-	// 番劇頁面
-	[Key.animeTitle]: "我的追番記錄",
-	[Key.animeSubtitle]: "記錄我的二次元之旅",
-	[Key.animeStatusWatching]: "在看",
-	[Key.animeStatusCompleted]: "看過",
-	[Key.animeStatusPlanned]: "想看",
-	[Key.animeStatusOnHold]: "擱置",
-	[Key.animeStatusDropped]: "拋棄",
-	[Key.animeFilterAll]: "全部",
-	[Key.animeYear]: "年份",
-	[Key.animeStudio]: "製作",
-	[Key.animeEmpty]: "暫無追番數據",
-	[Key.animeEmptyBangumi]: "請檢查 Bangumi 配置或網絡連接",
-	[Key.animeEmptyLocal]: "請在 src/data/anime.ts 文件中添加番劇信息",
 
 	// 短文頁面
 	[Key.diarySubtitle]: "隨時隨地，分享生活",

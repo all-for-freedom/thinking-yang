@@ -32,7 +32,6 @@ export const siteConfig: SiteConfig = {
 
 	// 特色页面开关配置(关闭不在使用的页面有助于提升SEO,关闭后直接在顶部导航删除对应的页面就行)
 	featurePages: {
-		anime: true, // 番剧页面开关
 		diary: true, // 日记页面开关
 		friends: true, // 友链页面开关
 		projects: true, // 项目页面开关
@@ -47,14 +46,6 @@ export const siteConfig: SiteConfig = {
 		text: "Shen Yang",
 		// 顶栏标题图标路径，默认使用 public/assets/home/home.png
 		icon: "assets/home/home.png",
-	},
-
-	bangumi: {
-		userId: "your-bangumi-id", // 在此处设置你的Bangumi用户ID，可以设置为 "sai" 测试
-	},
-
-	anime: {
-		mode: "local", // 番剧页面模式："bangumi" 使用Bangumi API，"local" 使用本地配置
 	},
 
 	// 文章列表布局配置
@@ -212,8 +203,7 @@ export const navBarConfig: NavBarConfig = {
 			url: "/content/",
 			icon: "material-symbols:person",
 			children: [
-				// LinkPreset.Anime,
-				// LinkPreset.Diary,
+				LinkPreset.Diary,
 				{
 					name: "Albums",
 					url: "/albums/",

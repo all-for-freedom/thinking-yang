@@ -24,7 +24,6 @@ export type SiteConfig = {
 
 	// 特色页面开关配置
 	featurePages: {
-		anime: boolean; // 番剧页面开关
 		diary: boolean; // 日记页面开关
 		friends: boolean; // 友链页面开关
 		projects: boolean; // 项目页面开关
@@ -53,16 +52,6 @@ export type SiteConfig = {
 		hanalei: {
 			enable: boolean; // 是否使用 Hanalei 作为全局字体
 		};
-	};
-
-	// 添加bangumi配置
-	bangumi?: {
-		userId?: string; // Bangumi用户ID
-	};
-
-	// 添加番剧页面配置
-	anime?: {
-		mode?: "bangumi" | "local"; // 番剧页面模式
 	};
 
 	// 标签样式配置
@@ -133,12 +122,11 @@ export enum LinkPreset {
 	Archive = 1,
 	About = 2,
 	Friends = 3,
-	Anime = 4,
-	Diary = 5,
-
-	Projects = 7,
-	Skills = 8,
-	Timeline = 9,
+	Diary = 4,
+	Gallery = 5,
+	Projects = 6,
+	Skills = 7,
+	Timeline = 8,
 }
 
 export type NavBarLink = {

@@ -42,25 +42,7 @@ export const ja: Translation = {
 	[Key.author]: "著者",
 	[Key.publishedAt]: "公開日",
 	[Key.license]: "ライセンス",
-	[Key.anime]: "アニメ",
 	[Key.diary]: "日記",
-
-	// アニメページ
-	[Key.animeTitle]: "私のアニメリスト",
-	[Key.animeSubtitle]: "私の二次元の旅を記録する",
-	[Key.animeStatusWatching]: "視聴中",
-	[Key.animeStatusCompleted]: "完了",
-	[Key.animeStatusPlanned]: "予定",
-	[Key.animeStatusOnHold]: "一時停止",
-	[Key.animeStatusDropped]: "中断",
-	[Key.animeFilterAll]: "すべて",
-	[Key.animeYear]: "年",
-	[Key.animeStudio]: "スタジオ",
-	[Key.animeEmpty]: "アニメデータなし",
-	[Key.animeEmptyBangumi]:
-		"Bangumiの設定またはネットワーク接続を確認してください",
-	[Key.animeEmptyLocal]:
-		"src/data/anime.tsファイルにアニメ情報を追加してください",
 
 	// 日記ページ
 	[Key.diarySubtitle]: "いつでもどこでも、生活を共有する",

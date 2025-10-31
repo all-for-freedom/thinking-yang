@@ -42,25 +42,7 @@ export const en: Translation = {
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",
 	[Key.license]: "License",
-	[Key.anime]: "Anime",
 	[Key.diary]: "Diary",
-
-	// Anime Page
-	[Key.animeTitle]: "My Anime List",
-	[Key.animeSubtitle]: "Record my anime journey",
-	[Key.animeStatusWatching]: "Watching",
-	[Key.animeStatusCompleted]: "Completed",
-	[Key.animeStatusPlanned]: "Planned",
-	[Key.animeStatusOnHold]: "On Hold",
-	[Key.animeStatusDropped]: "Dropped",
-	[Key.animeFilterAll]: "All",
-	[Key.animeYear]: "Year",
-	[Key.animeStudio]: "Studio",
-	[Key.animeEmpty]: "No anime data",
-	[Key.animeEmptyBangumi]:
-		"Please check Bangumi configuration or network connection",
-	[Key.animeEmptyLocal]:
-		"Please add anime information in src/data/anime.ts file",
 
 	// Diary Page
 	[Key.diarySubtitle]: "Share life anytime, anywhere",

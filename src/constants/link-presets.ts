@@ -23,11 +23,6 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/friends/",
 		icon: "material-symbols:group",
 	},
-	[LinkPreset.Anime]: {
-		name: i18n(I18nKey.anime),
-		url: "/anime/",
-		icon: "material-symbols:movie",
-	},
 	[LinkPreset.Diary]: {
 		name: i18n(I18nKey.diary),
 		url: "/diary/",
