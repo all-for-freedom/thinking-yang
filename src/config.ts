@@ -189,12 +189,6 @@ export const navBarConfig: NavBarConfig = {
 				},
 			],
 		},
-		// {
-		// 	name: "About",
-		// 	url: "/content/",
-		// 	icon: "material-symbols:info",
-		// 	children: [LinkPreset.About, LinkPreset.Friends],
-		// },
 		LinkPreset.About,
 		{
 			name: "Others",
