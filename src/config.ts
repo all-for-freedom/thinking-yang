@@ -181,6 +181,7 @@ export const navBarConfig: NavBarConfig = {
 			url: "/content/",
 			icon: "material-symbols:person",
 			children: [
+				LinkPreset.About,
 				LinkPreset.Diary,
 				{
 					name: "Albums",
@@ -189,7 +190,6 @@ export const navBarConfig: NavBarConfig = {
 				},
 			],
 		},
-		LinkPreset.About,
 		{
 			name: "Others",
 			url: "#",
