@@ -67,6 +67,18 @@ export const skillsData: Skill[] = [
 		projects: ["thinking-yang"],
 		color: "#06B6D4",
 	},
+	{
+		id: "dart",
+		name: "Dart",
+		description:
+			"A modern programming language developed by Google, mainly used for Flutter mobile app development.",
+		icon: "logos:dart",
+		category: "frontend",
+		level: "beginner",
+		experience: { years: 0, months: 8 },
+		projects: ["bounce_boardgame"],
+		color: "#0175C2",
+	},
 	
 
 	// Backend Skills
@@ -114,6 +126,30 @@ export const skillsData: Skill[] = [
 		experience: { years: 2, months: 0 },
 		color: "#A8B9CC",
 	},
+	{
+		id: "kotlin",
+		name: "Kotlin",
+		description:
+			"A modern programming language developed by JetBrains, fully compatible with Java, the preferred choice for Android development.",
+		icon: "logos:kotlin-icon",
+		category: "backend",
+		level: "beginner",
+		experience: { years: 0, months: 8 },
+		projects: ["bounce_boardgame"],
+		color: "#7F52FF",
+	},
+	{
+		id: "swift",
+		name: "Swift",
+		description:
+			"A modern programming language developed by Apple for iOS, macOS, watchOS, and tvOS development.",
+		icon: "logos:swift",
+		category: "backend",
+		level: "beginner",
+		experience: { years: 0, months: 6 },
+		projects: ["bounce_boardgame"],
+		color: "#FA7343",
+	},
 
 	// Database Skills
 	{
@@ -126,6 +162,17 @@ export const skillsData: Skill[] = [
 		level: "beginner",
 		experience: { years: 0, months: 6 },
 		color: "#4479A1",
+	},
+	{
+		id: "mongodb",
+		name: "MongoDB",
+		description:
+			"A document-oriented NoSQL database with a flexible data model.",
+		icon: "logos:mongodb-icon",
+		category: "database",
+		level: "beginner",
+		experience: { years: 0, months: 1 },
+		color: "#47A248",
 	},
 
 	// Tools

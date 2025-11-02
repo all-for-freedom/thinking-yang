@@ -6,7 +6,7 @@ export interface Project {
 	title: string;
 	description: string;
 	image: string;
-	category: "web" | "mobile" | "desktop" | "other";
+	category: "web" | "mobile" | "desktop" | "plugin" | "development tool" | "other";
 	techStack: string[];
 	status: "completed" | "in-progress" | "planned";
 	liveDemo?: string;
@@ -35,6 +35,74 @@ export const projectsData: Project[] = [
 		// endDate: "2077-13-32",
 		featured: true,
 		tags: ["Blog", "Open Source"],
+	},
+	{
+		id: "auto-header-template",
+		title: "Auto Header Template",
+		description:
+			"Auto Header Template for VS Code and Cursor",
+		image: "",
+		category: "plugin",
+		techStack: ["TypeScript"],
+		status: "completed",
+		liveDemo: "https://github.com/all-for-freedom/auto-header-template",
+		sourceCode: "https://github.com/all-for-freedom/auto-header-template", // 更改为GitHub链接
+		visitUrl: "https://github.com/all-for-freedom/auto-header-template", // 添加前往项目链接
+		startDate: "2025-10-28",
+		endDate: "2025-11-01",
+		featured: false,
+		tags: ["Plugin", "Open Source"],
+	},
+	{
+		id: "balta-toolkit",
+		title: "Baltamatica Toolkit",
+		description:
+			"A small collection of tools for Baltamatica",
+		image: "",
+		category: "plugin",
+		techStack: ["C++", "C"],
+		status: "planned",
+		liveDemo: "https://github.com/all-for-freedom/balta-toolkit",
+		sourceCode: "https://github.com/all-for-freedom/balta-toolkit", // 更改为GitHub链接
+		visitUrl: "https://github.com/all-for-freedom/balta-toolkit", // 添加前往项目链接
+		startDate: "2025-10-28",
+		// endDate: "2025-11-01",
+		featured: false,
+		tags: ["Mathematics", "Plugin", "Open Source"],
+	},
+	{
+		id: "scriptperf",
+		title: "Script Performance",
+		description:
+			"A tool for measuring the performance of scripts",
+		image: "",
+		category: "development tool",
+		techStack: ["Python"],
+		status: "planned",
+		liveDemo: "https://github.com/all-for-freedom/scriptperf",
+		sourceCode: "https://github.com/all-for-freedom/scriptperf", // 更改为GitHub链接
+		visitUrl: "https://github.com/all-for-freedom/scriptperf", // 添加前往项目链接
+		startDate: "2025-10-28",
+		// endDate: "2025-11-01",
+		featured: false,
+		tags: ["Performance", "Open Source"],
+	},
+	{
+		id: "bounce_boardgame",
+		title: "Bounce Boardgame",
+		description:
+			"A boardgame about bouncing balls together",
+		image: "",
+		category: "mobile",
+		techStack: ["Dart", "Kotlin", "Swift", "C++", "C"],
+		status: "planned",
+		liveDemo: "https://github.com/all-for-freedom/bounce_boardgame",
+		sourceCode: "https://github.com/all-for-freedom/bounce_boardgame", // 更改为GitHub链接
+		visitUrl: "https://github.com/all-for-freedom/bounce_boardgame", // 添加前往项目链接
+		startDate: "2025-10-28",
+		// endDate: "2025-11-01",
+		featured: true,
+		tags: ["Flutter", "Open Source"],
 	},
 ];
 
