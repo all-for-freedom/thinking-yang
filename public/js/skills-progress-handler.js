@@ -82,45 +82,56 @@
 		setTimeout(handleProgressAnimation, 100);
 	}
 
-	// 页面加载完成后初始化
-	document.addEventListener("DOMContentLoaded", () => {
-		initProgressAnimation();
-	});
-
-	// 监听页面导航事件
-	window.addEventListener("load", () => {
-		cleanupProgressBars();
-		setTimeout(initProgressAnimation, 100);
-	});
-
-	// 处理浏览器前进/后退导航
-	window.addEventListener("pageshow", (event) => {
-		if (event.persisted) {
-			cleanupProgressBars();
-			setTimeout(initProgressAnimation, 100);
-		}
-	});
-
 	// 如果使用SWUP，监听其事件
-	if (typeof window.Swup !== "undefined") {
-		// 监听 SWUP 开始过渡事件
-		document.addEventListener("swup:transitionStart", () => {
-			cleanupProgressBars();
-		});
+	function setupSwupListeners() {
+		if (typeof window !== "undefined" && window.swup) {
+			const swup = window.swup;
+			
+			// 监听 SWUP 开始过渡事件
+			swup.hooks.on("animation:out:start", () => {
+				cleanupProgressBars();
+			});
 
-		// 监听 SWUP 内容替换事件
-		document.addEventListener("swup:contentReplaced", () => {
-			cleanupProgressBars();
-			// 延迟初始化以确保DOM完全更新
-			setTimeout(initProgressAnimation, 50);
-		});
+			// 监听 SWUP 内容替换事件
+			swup.hooks.on("content:replace", () => {
+				cleanupProgressBars();
+				// 延迟初始化以确保DOM完全更新
+				setTimeout(initProgressAnimation, 50);
+			});
 
-		// 监听 SWUP 页面视图事件
-		document.addEventListener("swup:pageView", () => {
-			cleanupProgressBars();
-			setTimeout(initProgressAnimation, 100);
-		});
+			// 监听 SWUP 页面视图事件
+			swup.hooks.on("page:view", () => {
+				cleanupProgressBars();
+				setTimeout(initProgressAnimation, 100);
+			});
+			
+			// 监听 SWUP 动画进入结束事件
+			swup.hooks.on("animation:in:end", () => {
+				setTimeout(initProgressAnimation, 100);
+			});
+			
+			console.log("Swup skills progress listeners registered");
+			return true;
+		}
+		return false;
 	}
+	
+	// 延迟设置Swup监听器，确保Swup已初始化
+	setTimeout(() => {
+		if (!setupSwupListeners()) {
+			// 如果Swup尚未初始化，延迟重试
+			let retryCount = 0;
+			const maxRetries = 10;
+			const retryInterval = setInterval(() => {
+				if (setupSwupListeners()) {
+					clearInterval(retryInterval);
+				} else if (++retryCount >= maxRetries) {
+					clearInterval(retryInterval);
+					console.log("Swup not found, using fallback listeners");
+				}
+			}, 100);
+		}
+	}, 200);
 
 	// 增强对 Astro 导航的支持
 	document.addEventListener("astro:page-load", () => {
@@ -137,19 +148,15 @@
 	window.initSkillsProgressAnimation = initProgressAnimation;
 	window.cleanupSkillsProgressBars = cleanupProgressBars;
 
-	// 立即执行一次初始化，确保在脚本加载时就绑定事件
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", initProgressAnimation);
-	} else {
-		// DOM 已经加载完成
-		initProgressAnimation();
-	}
-
+	// 初始化和事件绑定
 	// 如果页面已经加载完成，立即初始化
-	if (
-		document.readyState === "complete" ||
-		document.readyState === "interactive"
-	) {
-		setTimeout(initProgressAnimation, 10);
+	if (document.readyState === "complete") {
+		initProgressAnimation();
+	} else if (document.readyState === "interactive") {
+		// DOM 已经加载完成但资源可能还在加载
+		initProgressAnimation();
+	} else {
+		// DOM 还在加载中，等待加载完成
+		document.addEventListener("DOMContentLoaded", initProgressAnimation);
 	}
 })();
