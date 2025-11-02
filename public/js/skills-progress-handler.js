@@ -102,7 +102,7 @@
 	});
 
 	// 如果使用SWUP，监听其事件
-	if (typeof window !== "undefined" && window.swup) {
+	if (typeof window.Swup !== "undefined") {
 		// 监听 SWUP 开始过渡事件
 		document.addEventListener("swup:transitionStart", () => {
 			cleanupProgressBars();
