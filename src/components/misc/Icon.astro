@@ -1,6 +1,7 @@
 ---
 // 可靠的图标组件
 // 提供加载状态管理和错误处理
+import { url } from "../../utils/url-utils";
 
 export interface Props {
 	icon: string;
@@ -42,6 +43,13 @@ const isCustomIcon = icon.startsWith('/') || icon.startsWith('http://') || icon.
 
 // 生成唯一ID
 const iconId = `icon-${Math.random().toString(36).substr(2, 9)}`;
+
+// 处理图标路径，确保正确处理base URL
+const iconSrc = isCustomIcon 
+  ? (icon.startsWith('http://') || icon.startsWith('https://') 
+      ? icon 
+      : url(icon))
+  : icon;
 ---
 
 <span 
@@ -60,7 +68,7 @@ const iconId = `icon-${Math.random().toString(36).substr(2, 9)}`;
   <!-- 自定义图标（图片或SVG） -->
   {isCustomIcon && (
     <img 
-      src={icon}
+      src={iconSrc}
       alt=""
       class="icon-content opacity-0 transition-opacity duration-200"
       data-icon-element
