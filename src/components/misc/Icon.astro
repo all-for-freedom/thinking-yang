@@ -215,6 +215,15 @@ const iconId = `icon-${Math.random().toString(36).substr(2, 9)}`;
     object-fit: contain;
     width: 100%;
     height: 100%;
+    /* 对于白色背景的图标，使用正片叠底模式去除白色背景 */
+    mix-blend-mode: multiply;
+  }
+  
+  /* 暗色模式下使用滤色模式 */
+  @media (prefers-color-scheme: dark) {
+    [data-icon-container] .icon-content img {
+      mix-blend-mode: screen;
+    }
   }
   
   /* Iconify 图标样式 */

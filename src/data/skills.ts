@@ -35,7 +35,7 @@ export const skillsData: Skill[] = [
 		name: "MATLAB",
 		description:
 			"A high-level programming language and interactive environment for numerical computation, algorithm development, and data visualization.",
-		icon: "/icons/matlab.jpg",
+		icon: "/icons/matlab.png",
 		category: "Scientific Computing",
 		level: "beginner",
 		experience: { years: 1, months: 6 },
@@ -299,8 +299,63 @@ export const skillsData: Skill[] = [
 		experience: { years: 2, months: 0 },
 		color: "#FCC624",
 	},
+	{
+		id: "mysql-workbench",
+		name: "MySQL Workbench",
+		description:
+			"The official integrated development environment for MySQL, supporting database modeling, SQL development, and visual analysis.",
+		icon: "logos:mysql-icon",
+		category: "tools",
+		level: "intermediate",
+		experience: { years: 0, months: 6 },
+		color: "#4479A1",
+	},
+	{
+		id: "datagrip",
+		name: "DataGrip",
+		description:
+			"A cross-platform database management tool developed by JetBrains, supporting multiple databases with intelligent code completion and database refactoring.",
+		icon: "logos:datagrip",
+		category: "tools",
+		level: "intermediate",
+		experience: { years: 0, months: 6 },
+		color: "#000000",
+	},
+	{
+		id: "mathematica",
+		name: "Mathematica",
+		description:
+			"A computational software system developed by Wolfram Research, widely used in scientific, engineering, and mathematical fields.",
+		icon: "/icons/mathematica.jpg",
+		category: "tools",
+		level: "intermediate",
+		experience: { years: 1, months: 0 },
+		color: "#DD1100",
+	},
 
 	// Other Skills
+	{
+		id: "wps-office",
+		name: "WPS Office",
+		description:
+			"A comprehensive office suite including word processing, spreadsheet, and presentation software, providing productivity solutions similar to Microsoft Office.",
+		icon: "/icons/wps.png",
+		category: "other",
+		level: "intermediate",
+		experience: { years: 2, months: 0 },
+		color: "#D83B01",
+	},
+	{
+		id: "microsoft-office",
+		name: "Microsoft Office",
+		description:
+			"A suite of productivity applications including Word, Excel, PowerPoint, and more, widely used in business and academic environments.",
+		icon: "/icons/office.png",
+		category: "other",
+		level: "intermediate",
+		experience: { years: 2, months: 0 },
+		color: "#D83B01",
+	},
 	
 ];
 
