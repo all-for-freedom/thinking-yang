@@ -8,9 +8,9 @@ import type {
 	MusicPlayerConfig,
 	NavBarConfig,
 	ProfileConfig,
-	SakuraConfig,
 	SidebarLayoutConfig,
 	SiteConfig,
+	SnowflakeConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
@@ -397,31 +397,31 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	},
 };
 
-export const sakuraConfig: SakuraConfig = {
-	enable: false, // 默认关闭樱花特效
-	sakuraNum: 21, // 樱花数量
-	limitTimes: -1, // 樱花越界限制次数，-1为无限循环
+export const snowflakeConfig: SnowflakeConfig = {
+	enable: true, // 默认启用雪花特效
+	snowflakeNum: 50, // 雪花数量（比樱花多）
+	limitTimes: -1, // 无限循环
 	size: {
-		min: 0.5, // 樱花最小尺寸倍数
-		max: 1.1, // 樱花最大尺寸倍数
+		min: 0.3, // 雪花更小
+		max: 0.8,
 	},
 	opacity: {
-		min: 0.3, // 樱花最小不透明度
-		max: 0.9, // 樱花最大不透明度
+		min: 0.4, // 雪花更透明
+		max: 0.9,
 	},
 	speed: {
 		horizontal: {
-			min: -1.7, // 水平移动速度最小值
-			max: -1.2, // 水平移动速度最大值
+			min: -0.5, // 几乎没有水平移动
+			max: 0.5,
 		},
 		vertical: {
-			min: 1.5, // 垂直移动速度最小值
-			max: 2.2, // 垂直移动速度最大值
+			min: 1.0, // 下落速度较慢
+			max: 2.0,
 		},
-		rotation: 0.03, // 旋转速度
-		fadeSpeed: 0.03, // 消失速度，不应大于最小不透明度
+		rotation: 0.01, // 慢速旋转
+		fadeSpeed: 0.01,
 	},
-	zIndex: 100, // 层级，确保樱花在合适的层级显示
+	zIndex: 100,
 };
 
 // Pio 看板娘配置
@@ -454,7 +454,7 @@ export const widgetConfigs = {
 	announcement: announcementConfig,
 	music: musicPlayerConfig,
 	layout: sidebarLayoutConfig,
-	sakura: sakuraConfig,
+	snowflake: snowflakeConfig, // 雪花配置
 	fullscreenWallpaper: fullscreenWallpaperConfig,
 	pio: pioConfig, // 添加 pio 配置
 } as const;
