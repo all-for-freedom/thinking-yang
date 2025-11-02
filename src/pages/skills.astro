@@ -74,6 +74,8 @@ const getLevelWidth = (level: string) => {
 // 获取分类的翻译文本
 const getCategoryText = (category: string) => {
 	switch (category) {
+		case "Scientific Computing":
+			return i18n(I18nKey.skillsScientificComputing);
 		case "frontend":
 			return i18n(I18nKey.skillsFrontend);
 		case "backend":

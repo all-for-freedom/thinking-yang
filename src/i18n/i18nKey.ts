@@ -99,6 +99,7 @@ enum I18nKey {
 	// Skills page
 	skills = "skills",
 	skillsSubtitle = "skillsSubtitle",
+	skillsScientificComputing = "skillsScientificComputing",
 	skillsFrontend = "skillsFrontend",
 	skillsBackend = "skillsBackend",
 	skillsDatabase = "skillsDatabase",

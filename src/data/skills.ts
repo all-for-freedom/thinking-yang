@@ -6,7 +6,7 @@ export interface Skill {
 	name: string;
 	description: string;
 	icon: string; // Iconify icon name
-	category: "frontend" | "backend" | "database" | "tools" | "other";
+	category: "Scientific Computing"| "frontend" | "backend" | "database" | "tools" | "other";
 	level: "beginner" | "intermediate" | "advanced" | "expert";
 	experience: {
 		years: number;
@@ -18,6 +18,63 @@ export interface Skill {
 }
 
 export const skillsData: Skill[] = [
+	// Scientific Computing Skills
+	{
+		id: "baltamatica",
+		name: "Baltamatica",
+		description:
+			"A domestically developed scientific computing software with similar functionality to MATLAB, designed for numerical computation and algorithm development.",
+		icon: "/icons/baltamatica.jpg",
+		category: "Scientific Computing",
+		level: "beginner",
+		experience: { years: 0, months: 3 },
+		color: "#87CEEB",
+	},
+	{
+		id: "matlab",
+		name: "MATLAB",
+		description:
+			"A high-level programming language and interactive environment for numerical computation, algorithm development, and data visualization.",
+		icon: "/icons/matlab.jpg",
+		category: "Scientific Computing",
+		level: "beginner",
+		experience: { years: 1, months: 6 },
+		color: "#0076A8",
+	},
+	{
+		id: "fortran",
+		name: "Fortran",
+		description:
+			"A general-purpose compiled programming language particularly suited for numerical computing and scientific computing.",
+		icon: "logos:fortran",
+		category: "Scientific Computing",
+		level: "beginner",
+		experience: { years: 0, months: 6 },
+		color: "#734F96",
+	},
+	{
+		id: "r",
+		name: "R",
+		description:
+			"A programming language and free software environment for statistical computing and graphics.",
+		icon: "logos:r-lang",
+		category: "Scientific Computing",
+		level: "beginner",
+		experience: { years: 0, months: 1 },
+		color: "#276DC3",
+	},
+	{
+		id: "wolfram",
+		name: "Wolfram Language",
+		description:
+			"A multi-paradigm programming language developed by Wolfram Research, primarily used for symbolic and numeric computation in Mathematica.",
+		icon: "/icons/wolfram.jpg",
+		category: "Scientific Computing",
+		level: "beginner",
+		experience: { years: 0, months: 3 },
+		color: "#DD1100",
+	},
+
 	// Frontend Skills
 	{
 		id: "javascript",
@@ -257,6 +314,7 @@ export const getSkillStats = () => {
 		expert: skillsData.filter((s) => s.level === "expert").length,
 	};
 	const byCategory = {
+		"Scientific Computing": skillsData.filter((s) => s.category === "Scientific Computing").length,
 		frontend: skillsData.filter((s) => s.category === "frontend").length,
 		backend: skillsData.filter((s) => s.category === "backend").length,
 		database: skillsData.filter((s) => s.category === "database").length,

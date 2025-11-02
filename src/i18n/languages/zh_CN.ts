@@ -101,6 +101,7 @@ export const zh_CN: Translation = {
 	// 技能展示页面
 	[Key.skills]: "技能展示",
 	[Key.skillsSubtitle]: "我的技术技能和专业知识",
+	[Key.skillsScientificComputing]: "科学计算",
 	[Key.skillsFrontend]: "前端开发",
 	[Key.skillsBackend]: "后端开发",
 	[Key.skillsDatabase]: "数据库",
