@@ -24,7 +24,7 @@ export const skillsData: Skill[] = [
 		name: "Baltamatica",
 		description:
 			"A domestically developed scientific computing software with similar functionality to MATLAB, designed for numerical computation and algorithm development.",
-		icon: "/icons/baltamatica.jpg",
+		icon: "/icons/baltamatica.png",
 		category: "Scientific Computing",
 		level: "beginner",
 		experience: { years: 0, months: 3 },
@@ -68,7 +68,7 @@ export const skillsData: Skill[] = [
 		name: "Wolfram Language",
 		description:
 			"A multi-paradigm programming language developed by Wolfram Research, primarily used for symbolic and numeric computation in Mathematica.",
-		icon: "/icons/wolfram.jpg",
+		icon: "/icons/wolfram.png",
 		category: "Scientific Computing",
 		level: "beginner",
 		experience: { years: 0, months: 3 },
@@ -326,7 +326,7 @@ export const skillsData: Skill[] = [
 		name: "Mathematica",
 		description:
 			"A computational software system developed by Wolfram Research, widely used in scientific, engineering, and mathematical fields.",
-		icon: "/icons/mathematica.jpg",
+		icon: "/icons/mathematica.png",
 		category: "tools",
 		level: "intermediate",
 		experience: { years: 1, months: 0 },
