@@ -21,18 +21,10 @@ interface PlaylistItem {
 	duration: number;
 }
 
-// 音乐播放器模式，可选 "local" 或 "meting"，从本地配置中获取或使用默认值 "meting"
-let mode = musicPlayerConfig.mode ?? "meting";
-// Meting API 地址，从配置中获取或使用默认地址(bilibili.uno(由哔哩哔哩松坂有希公益管理)),服务器在海外,部分音乐平台可能不支持并且速度可能慢,也可以自建Meting API
-let meting_api =
-	musicPlayerConfig.meting_api ??
-	"https://www.bilibili.uno/api?server=:server&type=:type&id=:id&auth=:auth&r=:r";
-// Meting API 的 ID，从配置中获取或使用默认值
-let meting_id = musicPlayerConfig.id ?? "14164869977";
-// Meting API 的服务器，从配置中获取或使用默认值,有的meting的api源支持更多平台,一般来说,netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
-let meting_server = musicPlayerConfig.server ?? "netease";
-// Meting API 的类型，从配置中获取或使用默认值
-let meting_type = musicPlayerConfig.type ?? "playlist";
+// 全局 Audio 单例，防止 HMR 创建多个实例
+let globalAudio: HTMLAudioElement | null = null;
+
+// 音乐播放器使用本地播放列表
 // 播放状态，默认为 false (未播放)
 let isPlaying = false;
 // 播放器是否展开，默认为 false
@@ -79,67 +71,29 @@ let volumeBar: HTMLElement;
 const localPlaylist: PlaylistItem[] = [
 	{
 		id: 1,
-		title: "ひとり上手",
-		artist: "Kaya",
-		cover: "assets/music/cover/hitori.jpg",
-		url: "assets/music/url/hitori.mp3",
-		duration: 240,
+		title: "还是会想你",
+		artist: "林达浪/h3R3",
+		cover: "assets/music/cover/hshxn.jpg",
+		url: "assets/music/url/hshxn.mp3",
+		duration: 0,
 	},
 	{
 		id: 2,
-		title: "眩耀夜行",
-		artist: "スリーズブーケ",
-		cover: "assets/music/cover/xryx.jpg",
-		url: "assets/music/url/xryx.mp3",
-		duration: 180,
+		title: "忘不掉的你",
+		artist: "h3R3",
+		cover: "assets/music/cover/wbddn.jpg",
+		url: "assets/music/url/wbddn.mp3",
+		duration: 0,
 	},
 	{
 		id: 3,
-		title: "春雷の頃",
-		artist: "22/7",
-		cover: "assets/music/cover/cl.jpg",
-		url: "assets/music/url/cl.mp3",
-		duration: 200,
+		title: "再等冬天",
+		artist: "h3R3",
+		cover: "assets/music/cover/zddt.jpg",
+		url: "assets/music/url/zddt.mp3",
+		duration: 0,
 	},
 ];
-
-async function fetchMetingPlaylist() {
-	if (!meting_api || !meting_id) return;
-	isLoading = true;
-	const apiUrl = meting_api
-		.replace(":server", meting_server)
-		.replace(":type", meting_type)
-		.replace(":id", meting_id)
-		.replace(":auth", "")
-		.replace(":r", Date.now().toString());
-	try {
-		const res = await fetch(apiUrl);
-		if (!res.ok) throw new Error("meting api error");
-		const list = await res.json();
-		playlist = list.map((song) => {
-			let title = song.name ?? song.title ?? "未知歌曲";
-			let artist = song.artist ?? song.author ?? "未知艺术家";
-			let dur = song.duration ?? 0;
-			if (dur > 10000) dur = Math.floor(dur / 1000);
-			if (!Number.isFinite(dur) || dur <= 0) dur = 0;
-			return {
-				id: song.id,
-				title,
-				artist,
-				cover: song.pic ?? "",
-				url: song.url ?? "",
-				duration: dur,
-			};
-		});
-		if (playlist.length > 0) {
-			loadSong(playlist[0]);
-		}
-		isLoading = false;
-	} catch (e) {
-		showErrorMessage("Meting 歌单获取失败");
-		isLoading = false;
-	}
-}
 
 function togglePlay() {
 	if (!audio || !currentSong.url) return;
@@ -345,29 +299,44 @@ function handleAudioEvents() {
 }
 
 onMount(() => {
+	// 如果全局实例已存在，清理旧的
+	if (globalAudio) {
+		globalAudio.pause();
+		globalAudio.src = "";
+		if (globalAudio.srcObject) {
+			globalAudio.srcObject = null;
+		}
+	}
+	
 	audio = new Audio();
+	globalAudio = audio;
 	audio.volume = volume;
 	handleAudioEvents();
 	if (!musicPlayerConfig.enable) {
 		return;
 	}
-	if (mode === "meting") {
-		fetchMetingPlaylist();
+	// 使用本地播放列表
+	playlist = [...localPlaylist];
+	if (playlist.length > 0) {
+		loadSong(playlist[0]);
 	} else {
-		// 使用本地播放列表，不发送任何API请求
-		playlist = [...localPlaylist];
-		if (playlist.length > 0) {
-			loadSong(playlist[0]);
-		} else {
-			showErrorMessage("本地播放列表为空");
-		}
+		showErrorMessage("本地播放列表为空");
 	}
 });
 
 onDestroy(() => {
 	if (audio) {
+		// 停止播放并清空
 		audio.pause();
 		audio.src = "";
+		// 断开音频源
+		if (audio.srcObject) {
+			audio.srcObject = null;
+		}
+	}
+	// 清理全局实例
+	if (globalAudio === audio) {
+		globalAudio = null;
 	}
 });
 </script>

@@ -211,11 +211,6 @@ export type AnnouncementConfig = {
 
 export type MusicPlayerConfig = {
 	enable: boolean; // 是否启用音乐播放器功能
-	mode?: "local" | "meting"; // 播放模式：local=本地播放列表，meting=Meting API
-	meting_api?: string; // Meting API 地址
-	id?: string; // Meting API 的 ID
-	server?: string; // Meting API 的服务器
-	type?: string; // Meting API 的类型
 };
 
 export type FooterConfig = {
