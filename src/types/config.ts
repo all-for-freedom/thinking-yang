@@ -266,33 +266,6 @@ export type SidebarLayoutConfig = {
 	};
 };
 
-export type SnowflakeConfig = {
-	enable: boolean; // 是否启用雪花特效
-	snowflakeNum: number; // 雪花数量
-	limitTimes: number; // 雪花越界限制次数，-1为无限循环
-	size: {
-		min: number; // 雪花最小尺寸倍数
-		max: number; // 雪花最大尺寸倍数
-	};
-	opacity: {
-		min: number; // 雪花最小不透明度
-		max: number; // 雪花最大不透明度
-	};
-	speed: {
-		horizontal: {
-			min: number; // 水平移动速度最小值（雪花通常很小）
-			max: number; // 水平移动速度最大值
-		};
-		vertical: {
-			min: number; // 垂直下落速度最小值
-			max: number; // 垂直下落速度最大值
-		};
-		rotation: number; // 旋转速度
-		fadeSpeed: number; // 消失速度
-	};
-	zIndex: number; // 层级
-};
-
 export type FullscreenWallpaperConfig = {
 	enable: boolean; // 是否启用全屏壁纸功能
 	src:
