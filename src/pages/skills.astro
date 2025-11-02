@@ -245,13 +245,13 @@ let animated = false;
                           </span>
                           {skill.projects && skill.projects.length > 0 && (
                             <span>
-                              {skill.projects.length} {skill.projects.length > 1 ? i18n(I18nKey.projects) : i18n(I18nKey.project)}
+                              {skill.projects.length} {skill.projects.length > 1 ? i18n(I18nKey.projects) : i18n(I18nKey.skillProject)}
                             </span>
                           )}
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
                           <div 
-                              class="h-2 rounded-full skill-progress-bar-animate"
+                              class="h-2 rounded-full"
                               style={`width: 0%; background-color: ${skill.color || 'rgb(99 102 241)'};`}
                               data-final-width={getLevelWidth(skill.level)}
                             ></div>

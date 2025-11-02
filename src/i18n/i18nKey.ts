@@ -119,6 +119,7 @@ enum I18nKey {
 	skillsIntermediate = "skillsIntermediate",
 	skillsBeginner = "skillsBeginner",
 	skillsAdvancedTitle = "skillsAdvancedTitle",
+	skillProject = "skillProject",
 	skillsProjects = "skillsProjects",
 	skillsDistribution = "skillsDistribution",
 	skillsByLevel = "skillsByLevel",

@@ -277,7 +277,7 @@ const calculatePercentage = (value: number, total: number) => {
             </div>
             <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
               <div 
-                class="h-3 rounded-full category-progress-bar-animate"
+                class="h-3 rounded-full"
                 style={`width: 0%; background-color: ${item.color};`}
                 data-final-width={`${percentage}%`}
               ></div>
@@ -360,7 +360,7 @@ const calculatePercentage = (value: number, total: number) => {
     
     // 延迟观察所有进度条元素，确保它们已正确渲染
     setTimeout(() => {
-      const progressBars = document.querySelectorAll('.category-progress-bar-animate');
+      const progressBars = document.querySelectorAll('[data-final-width]');
       progressBars.forEach(bar => {
         observer.observe(bar);
       });

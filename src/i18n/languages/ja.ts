@@ -166,6 +166,7 @@ export const ja: Translation = {
 	[Key.skillsIntermediate]: "中級者",
 	[Key.skillsBeginner]: "初心者",
 	[Key.skillsAdvancedTitle]: "専門スキル",
+	[Key.skillProject]: "プロジェクト",
 	[Key.skillsProjects]: "関連プロジェクト",
 	[Key.skillsDistribution]: "スキル分布",
 	[Key.skillsByLevel]: "レベル別分布",

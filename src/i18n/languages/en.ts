@@ -167,6 +167,7 @@ export const en: Translation = {
 	[Key.skillsIntermediate]: "Intermediate",
 	[Key.skillsBeginner]: "Beginner",
 	[Key.skillsAdvancedTitle]: "Professional Skills",
+	[Key.skillProject]: "project",
 	[Key.skillsProjects]: "Related Projects",
 	[Key.skillsDistribution]: "Skill Distribution",
 	[Key.skillsByLevel]: "By Level",
