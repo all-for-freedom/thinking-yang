@@ -42,3 +42,9 @@ export function getDir(path: string): string {
 export function url(path: string) {
 	return joinUrl("", import.meta.env.BASE_URL, path);
 }
+
+export function getAssetPath(path: string): string {
+	if (path.startsWith("http://") || path.startsWith("https://")) return path;
+	if (path.startsWith("/")) return url(path);
+	return url(`/${path}`);
+}

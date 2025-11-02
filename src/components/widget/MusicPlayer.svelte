@@ -10,6 +10,8 @@ import { musicPlayerConfig } from "../../config";
 // 导入国际化相关的 Key 和 i18n 实例
 import Key from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
+// 导入路径工具函数
+import { getAssetPath } from "../../utils/url-utils";
 
 // 定义播放列表项类型
 interface PlaylistItem {
@@ -173,12 +175,6 @@ function playSong(index: number) {
 			}
 		}, 100);
 	}
-}
-
-function getAssetPath(path: string): string {
-	if (path.startsWith("http://") || path.startsWith("https://")) return path;
-	if (path.startsWith("/")) return path;
-	return `/${path}`;
 }
 
 function loadSong(song: typeof currentSong) {
