@@ -23,9 +23,6 @@ interface PlaylistItem {
 	duration: number;
 }
 
-// 全局 Audio 单例，防止 HMR 创建多个实例
-let globalAudio: HTMLAudioElement | null = null;
-
 // 音乐播放器使用本地播放列表
 // 播放状态，默认为 false (未播放)
 let isPlaying = false;
@@ -75,24 +72,24 @@ const localPlaylist: PlaylistItem[] = [
 		id: 1,
 		title: "还是会想你",
 		artist: "林达浪/h3R3",
-		cover: "assets/music/cover/hshxn.jpg",
-		url: "assets/music/url/hshxn.mp3",
+		cover: "/assets/music/cover/hshxn.jpg",
+		url: "/assets/music/url/hshxn.mp3",
 		duration: 0,
 	},
 	{
 		id: 2,
 		title: "忘不掉的你",
 		artist: "h3R3",
-		cover: "assets/music/cover/wbddn.jpg",
-		url: "assets/music/url/wbddn.mp3",
+		cover: "/assets/music/cover/wbddn.jpg",
+		url: "/assets/music/url/wbddn.mp3",
 		duration: 0,
 	},
 	{
 		id: 3,
 		title: "再等冬天",
 		artist: "h3R3",
-		cover: "assets/music/cover/zddt.jpg",
-		url: "assets/music/url/zddt.mp3",
+		cover: "/assets/music/cover/zddt.jpg",
+		url: "/assets/music/url/zddt.mp3",
 		duration: 0,
 	},
 ];
@@ -295,17 +292,7 @@ function handleAudioEvents() {
 }
 
 onMount(() => {
-	// 如果全局实例已存在，清理旧的
-	if (globalAudio) {
-		globalAudio.pause();
-		globalAudio.src = "";
-		if (globalAudio.srcObject) {
-			globalAudio.srcObject = null;
-		}
-	}
-	
 	audio = new Audio();
-	globalAudio = audio;
 	audio.volume = volume;
 	handleAudioEvents();
 	if (!musicPlayerConfig.enable) {
@@ -329,10 +316,6 @@ onDestroy(() => {
 		if (audio.srcObject) {
 			audio.srcObject = null;
 		}
-	}
-	// 清理全局实例
-	if (globalAudio === audio) {
-		globalAudio = null;
 	}
 });
 </script>
