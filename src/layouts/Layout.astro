@@ -261,340 +261,355 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 			<script define:vars={{ snowflakeConfig: widgetConfigs.snowflake }}>
 				// 雪花对象类
 				class Snowflake {
-					constructor(x, y, s, r, a, fn, idx, img, limitArray, config) {
-						this.x = x;
-						this.y = y;
-						this.s = s;
-						this.r = r;
-        				this.a = a;
-						this.fn = fn;
-						this.idx = idx;
-						this.img = img;
-						this.limitArray = limitArray;
-						this.config = config;
-					}
+				constructor(x, y, s, r, a, fn, idx, img, limitArray, config) {
+					this.x = x;
+					this.y = y;
+					this.s = s;
+					this.r = r;
+					this.a = a;
+					this.fn = fn;
+					this.idx = idx;
+					this.img = img;
+					this.limitArray = limitArray;
+					this.config = config;
+				}
 
-					draw(cxt) {
-						cxt.save();
-						cxt.translate(this.x, this.y);
-						cxt.rotate(this.r);
-						cxt.globalAlpha = this.a;
-						cxt.drawImage(this.img, 0, 0, 40 * this.s, 40 * this.s);
-						cxt.restore();
-					}
+				draw(cxt) {
+					cxt.save();
+					cxt.translate(this.x, this.y);
+					cxt.rotate(this.r);
+					cxt.globalAlpha = this.a;
+					cxt.drawImage(this.img, 0, 0, 40 * this.s, 40 * this.s);
+					cxt.restore();
+				}
 
-					update() {
-						this.x = this.fn.x(this.x, this.y);
-						this.y = this.fn.y(this.y, this.y);
-						this.r = this.fn.r(this.r);
-						this.a = this.fn.a(this.a);
-						
-						// 如果雪花越界或完全透明，重新调整位置
-						if (
-							this.x > window.innerWidth ||
-							this.x < 0 ||
-							this.y > window.innerHeight ||
-							this.y < 0 ||
-							this.a <= 0
-						) {
-							// 如果雪花不做限制
-							if (this.limitArray[this.idx] === -1) {
+				update() {
+					this.x = this.fn.x(this.x, this.y);
+					this.y = this.fn.y(this.y, this.y);
+					this.r = this.fn.r(this.r);
+					this.a = this.fn.a(this.a);
+					
+					// 根据位置动态调整大小（上大下小）
+					// 高度为0时大小为maxSize，高度为window.innerHeight时大小为minSize
+					const progress = this.y / window.innerHeight;
+					const minSize = this.config.size.min;
+					const maxSize = this.config.size.max;
+					this.s = maxSize - (maxSize - minSize) * progress;
+					
+					// 如果雪花越界或完全透明，重新调整位置
+					if (
+						this.x > window.innerWidth ||
+						this.x < 0 ||
+						this.y > window.innerHeight ||
+						this.y < 0 ||
+						this.a <= 0
+					) {
+						// 如果雪花不做限制
+						if (this.limitArray[this.idx] === -1) {
+							this.resetPosition();
+						}
+						// 否则雪花有限制
+						else {
+							if (this.limitArray[this.idx] > 0) {
 								this.resetPosition();
-							}
-							// 否则雪花有限制
-							else {
-								if (this.limitArray[this.idx] > 0) {
-									this.resetPosition();
-									this.limitArray[this.idx]--;
-								}
+								this.limitArray[this.idx]--;
 							}
 						}
 					}
+				}
 
-					resetPosition() {
-						this.r = getRandom('fnr', this.config);
-						// 雪花只从顶部出现
-						this.x = getRandom('x', this.config);
+				resetPosition() {
+					this.r = getRandom('fnr', this.config);
+					// 雪花从右上角出现
+					// 随机在右侧或顶部开始
+					if (Math.random() > 0.5) {
+						// 从右侧开始（y随机）
+						this.x = window.innerWidth;
+						this.y = Math.random() * window.innerHeight * 0.3; // 只在顶部30%范围内
+					} else {
+						// 从顶部开始（x偏右）
+						this.x = window.innerWidth * 0.5 + Math.random() * window.innerWidth * 0.5; // 右半部分
 						this.y = 0;
-						this.s = getRandom('s', this.config);
-						this.r = getRandom('r', this.config);
-						this.a = getRandom('a', this.config);
+					}
+					this.s = getRandom('s', this.config);
+					this.r = getRandom('r', this.config);
+					this.a = getRandom('a', this.config);
+				}
+			}
+
+			// 雪花列表类
+			class SnowflakeList {
+				constructor() {
+					this.list = [];
+				}
+
+				push(snowflake) {
+					this.list.push(snowflake);
+				}
+
+				update() {
+					for (let i = 0, len = this.list.length; i < len; i++) {
+						this.list[i].update();
 					}
 				}
 
-				// 雪花列表类
-				class SnowflakeList {
-					constructor() {
-						this.list = [];
-					}
-
-					push(snowflake) {
-						this.list.push(snowflake);
-					}
-
-					update() {
-						for (let i = 0, len = this.list.length; i < len; i++) {
-							this.list[i].update();
-						}
-					}
-
-					draw(cxt) {
-						for (let i = 0, len = this.list.length; i < len; i++) {
-							this.list[i].draw(cxt);
-						}
-					}
-
-					get(i) {
-						return this.list[i];
-					}
-
-					size() {
-						return this.list.length;
+				draw(cxt) {
+					for (let i = 0, len = this.list.length; i < len; i++) {
+						this.list[i].draw(cxt);
 					}
 				}
 
-				// 获取随机值的函数
-				function getRandom(option, config) {
-					let ret;
-					let random;
-
-					switch (option) {
-						case 'x':
-							ret = Math.random() * window.innerWidth;
-							break;
-						case 'y':
-							ret = Math.random() * window.innerHeight;
-							break;
-						case 's':
-							ret = config.size.min + Math.random() * (config.size.max - config.size.min);
-							break;
-						case 'r':
-							ret = Math.random() * 6;
-							break;
-						case 'a':
-							ret = config.opacity.min + Math.random() * (config.opacity.max - config.opacity.min);
-							break;
-						case 'fnx':
-							random = config.speed.horizontal.min + Math.random() * (config.speed.horizontal.max - config.speed.horizontal.min);
-							ret = function (x, y) {
-								return x + random;
-							};
-							break;
-						case 'fny':
-							random = config.speed.vertical.min + Math.random() * (config.speed.vertical.max - config.speed.vertical.min);
-							ret = function (x, y) {
-								return y + random;
-							};
-							break;
-						case 'fnr':
-							ret = function (r) {
-								return r + config.speed.rotation;
-							};
-							break;
-						case 'fna':
-							ret = function (alpha) {
-								return alpha - config.speed.fadeSpeed * 0.01;
-							};
-							break;
-					}
-					return ret;
+				get(i) {
+					return this.list[i];
 				}
 
-				// 雪花管理器类
-				class SnowflakeManager {
-					constructor(config) {
-						this.config = config;
-						this.canvas = null;
-						this.ctx = null;
-						this.snowflakeList = null;
-						this.animationId = null;
-						this.img = null;
-						this.isRunning = false;
-					}
+				size() {
+					return this.list.length;
+				}
+			}
 
-					// 初始化雪花特效
-					async init() {
-						if (!this.config.enable || this.isRunning) {
-							return;
-						}
+			// 获取随机值的函数
+			function getRandom(option, config) {
+				let ret;
+				let random;
 
-						// 创建图片对象
-						this.img = new Image();
-						this.img.src = '/snow.png'; // 使用雪花图片
-
-						// 等待图片加载完成
-						await new Promise((resolve, reject) => {
-							if (this.img) {
-								this.img.onload = () => resolve();
-								this.img.onerror = () => reject(new Error('Failed to load snowflake image'));
-							}
-						});
-
-						this.createCanvas();
-						this.createSnowflakeList();
-						this.startAnimation();
-						this.isRunning = true;
-					}
-
-					// 创建画布
-					createCanvas() {
-						this.canvas = document.createElement('canvas');
-						this.canvas.height = window.innerHeight;
-						this.canvas.width = window.innerWidth;
-						this.canvas.setAttribute('style', `position: fixed; left: 0; top: 0; pointer-events: none; z-index: ${this.config.zIndex};`);
-						this.canvas.setAttribute('id', 'canvas_snowflake');
-						document.body.appendChild(this.canvas);
-						this.ctx = this.canvas.getContext('2d');
-
-						// 监听窗口大小变化
-						window.addEventListener('resize', this.handleResize.bind(this));
-					}
-
-					// 创建雪花列表
-					createSnowflakeList() {
-						if (!this.img || !this.ctx) return;
-
-						this.snowflakeList = new SnowflakeList();
-						const limitArray = new Array(this.config.snowflakeNum).fill(this.config.limitTimes);
-
-						for (let i = 0; i < this.config.snowflakeNum; i++) {
-							const randomX = getRandom('x', this.config);
-							const randomY = getRandom('y', this.config);
-							const randomS = getRandom('s', this.config);
-							const randomR = getRandom('r', this.config);
-							const randomA = getRandom('a', this.config);
-							const randomFnx = getRandom('fnx', this.config);
-							const randomFny = getRandom('fny', this.config);
-							const randomFnR = getRandom('fnr', this.config);
-							const randomFnA = getRandom('fna', this.config);
-
-							const snowflake = new Snowflake(
-								randomX,
-								randomY,
-								randomS,
-								randomR,
-								randomA,
-								{
-									x: randomFnx,
-									y: randomFny,
-									r: randomFnR,
-									a: randomFnA,
-								},
-								i,
-								this.img,
-								limitArray,
-								this.config
-							);
-
-							snowflake.draw(this.ctx);
-							this.snowflakeList.push(snowflake);
-						}
-					}
-
-					// 开始动画
-					startAnimation() {
-						if (!this.ctx || !this.canvas || !this.snowflakeList) return;
-
-						const animate = () => {
-							if (!this.ctx || !this.canvas || !this.snowflakeList) return;
-
-							this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-							this.snowflakeList.update();
-							this.snowflakeList.draw(this.ctx);
-							this.animationId = requestAnimationFrame(animate);
+				switch (option) {
+					case 'x':
+						ret = Math.random() * window.innerWidth;
+						break;
+					case 'y':
+						ret = Math.random() * window.innerHeight;
+						break;
+					case 's':
+						ret = config.size.min + Math.random() * (config.size.max - config.size.min);
+						break;
+					case 'r':
+						ret = Math.random() * 6;
+						break;
+					case 'a':
+						ret = config.opacity.min + Math.random() * (config.opacity.max - config.opacity.min);
+						break;
+					case 'fnx':
+						random = config.speed.horizontal.min + Math.random() * (config.speed.horizontal.max - config.speed.horizontal.min);
+						ret = function (x, y) {
+							return x + random;
 						};
-
-						this.animationId = requestAnimationFrame(animate);
-					}
-
-					// 处理窗口大小变化
-					handleResize() {
-						if (this.canvas) {
-							this.canvas.width = window.innerWidth;
-							this.canvas.height = window.innerHeight;
-						}
-					}
-
-					// 停止雪花特效
-					stop() {
-						if (this.animationId) {
-							cancelAnimationFrame(this.animationId);
-							this.animationId = null;
-						}
-
-						if (this.canvas) {
-							document.body.removeChild(this.canvas);
-							this.canvas = null;
-						}
-
-						window.removeEventListener('resize', this.handleResize.bind(this));
-						this.isRunning = false;
-					}
-
-					// 切换雪花特效
-					toggle() {
-						if (this.isRunning) {
-							this.stop();
-						} else {
-							this.init();
-						}
-					}
-
-					// 更新配置
-					updateConfig(newConfig) {
-						const wasRunning = this.isRunning;
-						if (wasRunning) {
-							this.stop();
-						}
-						this.config = newConfig;
-						if (wasRunning && newConfig.enable) {
-							this.init();
-						}
-					}
-
-					// 获取运行状态
-					getIsRunning() {
-						return this.isRunning;
-					}
+						break;
+					case 'fny':
+						random = config.speed.vertical.min + Math.random() * (config.speed.vertical.max - config.speed.vertical.min);
+						ret = function (x, y) {
+							return y + random;
+						};
+						break;
+					case 'fnr':
+						ret = function (r) {
+							return r + config.speed.rotation;
+						};
+						break;
+					case 'fna':
+						ret = function (alpha) {
+							return alpha - config.speed.fadeSpeed * 0.01;
+						};
+						break;
 				}
+				return ret;
+			}
 
-				// 创建全局雪花管理器实例
-				let globalSnowflakeManager = null;
+			// 雪花管理器类
+			class SnowflakeManager {
+				constructor(config) {
+					this.config = config;
+					this.canvas = null;
+					this.ctx = null;
+					this.snowflakeList = null;
+					this.animationId = null;
+					this.img = null;
+					this.isRunning = false;
+				}
 
 				// 初始化雪花特效
-				function initSnowflake(config) {
-					if (globalSnowflakeManager) {
-						globalSnowflakeManager.updateConfig(config);
-					} else {
-						globalSnowflakeManager = new SnowflakeManager(config);
-						if (config.enable) {
-							globalSnowflakeManager.init();
+				async init() {
+					if (!this.config.enable || this.isRunning) {
+						return;
+					}
+
+					// 创建图片对象
+					this.img = new Image();
+					this.img.src = '/snow.png'; // 使用雪花图片
+
+					// 等待图片加载完成
+					await new Promise((resolve, reject) => {
+						if (this.img) {
+							this.img.onload = () => resolve();
+							this.img.onerror = () => reject(new Error('Failed to load snowflake image'));
 						}
+					});
+
+					this.createCanvas();
+					this.createSnowflakeList();
+					this.startAnimation();
+					this.isRunning = true;
+				}
+
+				// 创建画布
+				createCanvas() {
+					this.canvas = document.createElement('canvas');
+					this.canvas.height = window.innerHeight;
+					this.canvas.width = window.innerWidth;
+					this.canvas.setAttribute('style', `position: fixed; left: 0; top: 0; pointer-events: none; z-index: ${this.config.zIndex};`);
+					this.canvas.setAttribute('id', 'canvas_snowflake');
+					document.body.appendChild(this.canvas);
+					this.ctx = this.canvas.getContext('2d');
+
+					// 监听窗口大小变化
+					window.addEventListener('resize', this.handleResize.bind(this));
+				}
+
+				// 创建雪花列表
+				createSnowflakeList() {
+					if (!this.img || !this.ctx) return;
+
+					this.snowflakeList = new SnowflakeList();
+					const limitArray = new Array(this.config.snowflakeNum).fill(this.config.limitTimes);
+
+					for (let i = 0; i < this.config.snowflakeNum; i++) {
+						const randomX = getRandom('x', this.config);
+						const randomY = getRandom('y', this.config);
+						const randomS = getRandom('s', this.config);
+						const randomR = getRandom('r', this.config);
+						const randomA = getRandom('a', this.config);
+						const randomFnx = getRandom('fnx', this.config);
+						const randomFny = getRandom('fny', this.config);
+						const randomFnR = getRandom('fnr', this.config);
+						const randomFnA = getRandom('fna', this.config);
+
+						const snowflake = new Snowflake(
+							randomX,
+							randomY,
+							randomS,
+							randomR,
+							randomA,
+							{
+								x: randomFnx,
+								y: randomFny,
+								r: randomFnR,
+								a: randomFnA,
+							},
+							i,
+							this.img,
+							limitArray,
+							this.config
+						);
+
+						snowflake.draw(this.ctx);
+						this.snowflakeList.push(snowflake);
 					}
 				}
 
-				// 雪花特效初始化
-				(function() {
-					// 全局标记，确保雪花特效只初始化一次
-					if (window.snowflakeInitialized) {
-						return;
-					}
-					
-					// 初始化雪花特效的函数
-					const setupSnowflake = () => {
-						if (snowflakeConfig.enable && !window.snowflakeInitialized) {
-							initSnowflake(snowflakeConfig);
-							window.snowflakeInitialized = true;
-						}
+				// 开始动画
+				startAnimation() {
+					if (!this.ctx || !this.canvas || !this.snowflakeList) return;
+
+					const animate = () => {
+						if (!this.ctx || !this.canvas || !this.snowflakeList) return;
+
+						this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+						this.snowflakeList.update();
+						this.snowflakeList.draw(this.ctx);
+						this.animationId = requestAnimationFrame(animate);
 					};
-					
-					// 页面加载完成后初始化雪花特效
-					if (document.readyState === 'loading') {
-						document.addEventListener('DOMContentLoaded', setupSnowflake);
-					} else {
-						setupSnowflake();
+
+					this.animationId = requestAnimationFrame(animate);
+				}
+
+				// 处理窗口大小变化
+				handleResize() {
+					if (this.canvas) {
+						this.canvas.width = window.innerWidth;
+						this.canvas.height = window.innerHeight;
 					}
-				})();
+				}
+
+				// 停止雪花特效
+				stop() {
+					if (this.animationId) {
+						cancelAnimationFrame(this.animationId);
+						this.animationId = null;
+					}
+
+					if (this.canvas) {
+						document.body.removeChild(this.canvas);
+						this.canvas = null;
+					}
+
+					window.removeEventListener('resize', this.handleResize.bind(this));
+					this.isRunning = false;
+				}
+
+				// 切换雪花特效
+				toggle() {
+					if (this.isRunning) {
+						this.stop();
+					} else {
+						this.init();
+					}
+				}
+
+				// 更新配置
+				updateConfig(newConfig) {
+					const wasRunning = this.isRunning;
+					if (wasRunning) {
+						this.stop();
+					}
+					this.config = newConfig;
+					if (wasRunning && newConfig.enable) {
+						this.init();
+					}
+				}
+
+				// 获取运行状态
+				getIsRunning() {
+					return this.isRunning;
+				}
+			}
+
+			// 创建全局雪花管理器实例
+			let globalSnowflakeManager = null;
+
+			// 初始化雪花特效
+			function initSnowflake(config) {
+				if (globalSnowflakeManager) {
+					globalSnowflakeManager.updateConfig(config);
+				} else {
+					globalSnowflakeManager = new SnowflakeManager(config);
+					if (config.enable) {
+						globalSnowflakeManager.init();
+					}
+				}
+			}
+
+			// 雪花特效初始化
+			(function() {
+				// 全局标记，确保雪花特效只初始化一次
+				if (window.snowflakeInitialized) {
+					return;
+				}
+				
+				// 初始化雪花特效的函数
+				const setupSnowflake = () => {
+					if (snowflakeConfig.enable && !window.snowflakeInitialized) {
+						initSnowflake(snowflakeConfig);
+						window.snowflakeInitialized = true;
+					}
+				};
+				
+				// 页面加载完成后初始化雪花特效
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', setupSnowflake);
+				} else {
+					setupSnowflake();
+				}
+			})();
 			</script>
 		)}
 		

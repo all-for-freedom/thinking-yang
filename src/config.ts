@@ -399,26 +399,26 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 
 export const snowflakeConfig: SnowflakeConfig = {
 	enable: true, // 默认启用雪花特效
-	snowflakeNum: 50, // 雪花数量（比樱花多）
+	snowflakeNum: 10, // 雪花数量（减少到10个）
 	limitTimes: -1, // 无限循环
 	size: {
-		min: 0.3, // 雪花更小
-		max: 0.8,
+		min: 0.2, // 雪花最小尺寸
+		max: 1.5, // 雪花最大尺寸（上方雪花更大）
 	},
 	opacity: {
-		min: 0.4, // 雪花更透明
+		min: 0.3, // 雪花更透明
 		max: 0.9,
 	},
 	speed: {
 		horizontal: {
-			min: -0.5, // 几乎没有水平移动
-			max: 0.5,
+			min: -1.5, // 向左移动（从右上到左下），减慢速度
+			max: -0.8,
 		},
 		vertical: {
-			min: 1.0, // 下落速度较慢
-			max: 2.0,
+			min: 0.6, // 下落速度，减慢
+			max: 1.2,
 		},
-		rotation: 0.01, // 慢速旋转
+		rotation: 0.02, // 旋转速度
 		fadeSpeed: 0.01,
 	},
 	zIndex: 100,
