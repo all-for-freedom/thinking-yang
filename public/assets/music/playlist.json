@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "title": "还是会想你",
+    "artist": "林达浪/h3R3",
+    "cover": "/assets/music/cover/hshxn.jpg",
+    "url": "/assets/music/url/hshxn.mp3",
+    "duration": 0
+  },
+  {
+    "id": 2,
+    "title": "忘不掉的你",
+    "artist": "h3R3",
+    "cover": "/assets/music/cover/wbddn.jpg",
+    "url": "/assets/music/url/wbddn.mp3",
+    "duration": 0
+  },
+  {
+    "id": 3,
+    "title": "再等冬天",
+    "artist": "h3R3",
+    "cover": "/assets/music/cover/zddt.jpg",
+    "url": "/assets/music/url/zddt.mp3",
+    "duration": 0
+  }
+]
+

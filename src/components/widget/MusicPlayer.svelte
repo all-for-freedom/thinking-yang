@@ -67,32 +67,7 @@ let audio: HTMLAudioElement;
 let progressBar: HTMLElement;
 let volumeBar: HTMLElement;
 
-const localPlaylist: PlaylistItem[] = [
-	{
-		id: 1,
-		title: "还是会想你",
-		artist: "林达浪/h3R3",
-		cover: "/assets/music/cover/hshxn.jpg",
-		url: "/assets/music/url/hshxn.mp3",
-		duration: 0,
-	},
-	{
-		id: 2,
-		title: "忘不掉的你",
-		artist: "h3R3",
-		cover: "/assets/music/cover/wbddn.jpg",
-		url: "/assets/music/url/wbddn.mp3",
-		duration: 0,
-	},
-	{
-		id: 3,
-		title: "再等冬天",
-		artist: "h3R3",
-		cover: "/assets/music/cover/zddt.jpg",
-		url: "/assets/music/url/zddt.mp3",
-		duration: 0,
-	},
-];
+const localPlaylist: PlaylistItem[] = [];
 
 function togglePlay() {
 	if (!audio || !currentSong.url) return;
@@ -291,19 +266,32 @@ function handleAudioEvents() {
 	audio.addEventListener("waiting", () => {});
 }
 
-onMount(() => {
+onMount(async () => {
 	audio = new Audio();
 	audio.volume = volume;
 	handleAudioEvents();
 	if (!musicPlayerConfig.enable) {
 		return;
 	}
-	// 使用本地播放列表
-	playlist = [...localPlaylist];
-	if (playlist.length > 0) {
-		loadSong(playlist[0]);
-	} else {
-		showErrorMessage("本地播放列表为空");
+	
+	// 从 JSON 文件加载播放列表
+	try {
+		const playlistUrl = getAssetPath('/assets/music/playlist.json');
+		const response = await fetch(playlistUrl);
+		if (response.ok) {
+			const loadedPlaylist: PlaylistItem[] = await response.json();
+			playlist = loadedPlaylist;
+			if (playlist.length > 0) {
+				loadSong(playlist[0]);
+			} else {
+				showErrorMessage("本地播放列表为空");
+			}
+		} else {
+			showErrorMessage("无法加载播放列表");
+		}
+	} catch (error) {
+		console.error('加载播放列表失败:', error);
+		showErrorMessage("加载播放列表失败");
 	}
 });
 
