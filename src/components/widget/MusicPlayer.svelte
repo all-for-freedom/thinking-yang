@@ -11,6 +11,16 @@ import { musicPlayerConfig } from "../../config";
 import Key from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
 
+// 定义播放列表项类型
+interface PlaylistItem {
+	id: number | string;
+	title: string;
+	artist: string;
+	cover: string;
+	url: string;
+	duration: number;
+}
+
 // 音乐播放器模式，可选 "local" 或 "meting"，从本地配置中获取或使用默认值 "meting"
 let mode = musicPlayerConfig.mode ?? "meting";
 // Meting API 地址，从配置中获取或使用默认地址(bilibili.uno(由哔哩哔哩松坂有希公益管理)),服务器在海外,部分音乐平台可能不支持并且速度可能慢,也可以自建Meting API
@@ -51,7 +61,8 @@ let errorMessage = "";
 let showError = false;
 
 // 当前歌曲信息
-let currentSong = {
+let currentSong: PlaylistItem = {
+	id: 0,
 	title: "示例歌曲",
 	artist: "示例艺术家",
 	cover: "/favicon/favicon-light-192.png",
@@ -59,13 +70,13 @@ let currentSong = {
 	duration: 0,
 };
 
-let playlist = [];
+let playlist: PlaylistItem[] = [];
 let currentIndex = 0;
 let audio: HTMLAudioElement;
 let progressBar: HTMLElement;
 let volumeBar: HTMLElement;
 
-const localPlaylist = [
+const localPlaylist: PlaylistItem[] = [
 	{
 		id: 1,
 		title: "ひとり上手",
