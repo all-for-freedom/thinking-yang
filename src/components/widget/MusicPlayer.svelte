@@ -234,36 +234,51 @@ function formatTime(seconds: number): string {
 	return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
+// 定义具名事件处理函数，便于清理
+function handlePlay() {
+	isPlaying = true;
+}
+
+function handlePause() {
+	isPlaying = false;
+}
+
+function handleTimeUpdate() {
+	currentTime = audio.currentTime;
+}
+
+function handleEnded() {
+	if (isRepeating === 1) {
+		audio.currentTime = 0;
+		audio.play().catch(() => {});
+	} else if (
+		isRepeating === 2 ||
+		currentIndex < playlist.length - 1 ||
+		isShuffled
+	) {
+		nextSong();
+	} else {
+		isPlaying = false;
+	}
+}
+
+function handleError() {
+	isLoading = false;
+}
+
+function handleStalled() {}
+
+function handleWaiting() {}
+
 function handleAudioEvents() {
 	if (!audio) return;
-	audio.addEventListener("play", () => {
-		isPlaying = true;
-	});
-	audio.addEventListener("pause", () => {
-		isPlaying = false;
-	});
-	audio.addEventListener("timeupdate", () => {
-		currentTime = audio.currentTime;
-	});
-	audio.addEventListener("ended", () => {
-		if (isRepeating === 1) {
-			audio.currentTime = 0;
-			audio.play().catch(() => {});
-		} else if (
-			isRepeating === 2 ||
-			currentIndex < playlist.length - 1 ||
-			isShuffled
-		) {
-			nextSong();
-		} else {
-			isPlaying = false;
-		}
-	});
-	audio.addEventListener("error", (event) => {
-		isLoading = false;
-	});
-	audio.addEventListener("stalled", () => {});
-	audio.addEventListener("waiting", () => {});
+	audio.addEventListener("play", handlePlay);
+	audio.addEventListener("pause", handlePause);
+	audio.addEventListener("timeupdate", handleTimeUpdate);
+	audio.addEventListener("ended", handleEnded);
+	audio.addEventListener("error", handleError);
+	audio.addEventListener("stalled", handleStalled);
+	audio.addEventListener("waiting", handleWaiting);
 }
 
 onMount(async () => {
@@ -297,6 +312,14 @@ onMount(async () => {
 
 onDestroy(() => {
 	if (audio) {
+		// 移除所有事件监听器
+		audio.removeEventListener("play", handlePlay);
+		audio.removeEventListener("pause", handlePause);
+		audio.removeEventListener("timeupdate", handleTimeUpdate);
+		audio.removeEventListener("ended", handleEnded);
+		audio.removeEventListener("error", handleError);
+		audio.removeEventListener("stalled", handleStalled);
+		audio.removeEventListener("waiting", handleWaiting);
 		// 停止播放并清空
 		audio.pause();
 		audio.src = "";
