@@ -22,7 +22,7 @@ website: [심양의 블로그](https://all-for-freedom.github.io/thinking-yang/)
 
 ### 특별한 감사
 
-- 현재 비어있습니다
+- [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) - 이 템플릿은 제가 개인 웹사이트를 작성하기 위해 원하는 모든 것을 완벽하게 제공합니다.
 
 ---
 

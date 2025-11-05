@@ -22,7 +22,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Special Thanks
 
-- Empty now
+- [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) - This template perfectly provides everything I want for writing my personal website.
 
 ---
 

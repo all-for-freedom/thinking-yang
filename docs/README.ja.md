@@ -22,7 +22,7 @@ website: [瀋陽のブログ](https://all-for-freedom.github.io/thinking-yang/)
 
 ### 特別な感謝
 
-- 現在は空です
+- [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) - このテンプレートは、個人ウェブサイトを作成するために私が望むすべてを完璧に提供してくれます。
 
 ---
 
