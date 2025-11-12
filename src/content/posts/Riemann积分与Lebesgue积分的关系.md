@@ -1,6 +1,6 @@
 ---
-title: Riemann and Lebesgue
-published: 2025-01-20
+title: Riemann&Lebesgue
+published: 2025-01-21
 pinned: true
 description: Riemann积分 与 Lebesgue积分的关系
 tags: []
