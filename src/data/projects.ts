@@ -61,11 +61,28 @@ export const projectsData: Project[] = [
 		image: "",
 		category: "plugin",
 		techStack: ["C++", "C"],
-		status: "planned",
+		status: "completed",
 		liveDemo: "https://github.com/all-for-freedom/balta-toolkit",
 		sourceCode: "https://github.com/all-for-freedom/balta-toolkit", // 更改为GitHub链接
 		visitUrl: "https://github.com/all-for-freedom/balta-toolkit", // 添加前往项目链接
 		startDate: "2025-10-28",
+		// endDate: "2025-11-01",
+		featured: false,
+		tags: ["Mathematics", "Plugin", "Open Source"],
+	},
+	{
+		id: "balta-operators",
+		title: "Baltamatica Operators",
+		description:
+			"A small collection of lops for Baltamatica",
+		image: "",
+		category: "plugin",
+		techStack: ["C++", "C"],
+		status: "planned",
+		liveDemo: "",
+		sourceCode: "", // 更改为GitHub链接
+		visitUrl: "", // 添加前往项目链接
+		startDate: "2025-11-12",
 		// endDate: "2025-11-01",
 		featured: false,
 		tags: ["Mathematics", "Plugin", "Open Source"],
@@ -78,7 +95,7 @@ export const projectsData: Project[] = [
 		image: "",
 		category: "development tool",
 		techStack: ["Python"],
-		status: "planned",
+		status: "in-progress",
 		liveDemo: "https://github.com/all-for-freedom/scriptperf",
 		sourceCode: "https://github.com/all-for-freedom/scriptperf", // 更改为GitHub链接
 		visitUrl: "https://github.com/all-for-freedom/scriptperf", // 添加前往项目链接
