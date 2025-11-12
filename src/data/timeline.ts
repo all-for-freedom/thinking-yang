@@ -42,6 +42,23 @@ export const timelineData: TimelineItem[] = [
 		featured: true,
 	},
 	{
+		id: "win-3rd-in-balta",
+		title: "Baltamatica Scientific Competition",
+		description:
+			"Win 3rd prize in Baltamatica Scientific Competition",
+		type: "achievement",
+		startDate: "2023-11-14",
+		location: "Beijing",
+		organization: "Baltamatica",
+		skills: ["C++", "Baltamatica"],
+		achievements: [
+			"build a useful plugin for baltamatica",
+		],
+		icon: "/icons/baltamatica.png",
+		color: "#059669",
+		featured: true,
+	},
+	{
 		id: "high-school-graduation",
 		title: "High School Graduation",
 		description:
