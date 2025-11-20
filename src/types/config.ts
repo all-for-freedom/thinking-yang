@@ -1,10 +1,14 @@
-import type { DARK_MODE, LIGHT_MODE } from "../constants/constants";
+import type { DARK_MODE, LIGHT_MODE, WALLPAPER_BANNER, WALLPAPER_FULLSCREEN, WALLPAPER_NONE } from "../constants/constants";
 
 export type SiteConfig = {
 	title: string;
 	subtitle: string;
+	siteURL: string; // 站点URL，以斜杠结尾，例如：https://mizuki.mysqil.com/
 	keywords?: string[]; // 站点关键词，用于生成 <meta name="keywords">
+	siteStartDate?: string; // 站点开始日期，格式：YYYY-MM-DD，用于计算运行天数
 
+	timeZone:|-12|-11|-10|-9|-8|-7|-6|-5|-4|-3|-2|-1|0|1|2|3|4|5|6|7|8|9|10|11|12;
+	
 	lang:
 		| "en"
 		| "zh_CN"
@@ -45,21 +49,40 @@ export type SiteConfig = {
 
 	// 添加字体配置
 	font: {
-		zenMaruGothic: {
-			enable: boolean; // 是否使用 ZenMaruGothic-Black 作为全局字体
+		asciiFont?: {
+			fontFamily: string;
+			fontWeight: string | number;
+			localFonts: string[];
+			enableCompress: boolean;
 		};
-		hanalei: {
-			enable: boolean; // 是否使用 Hanalei 作为全局字体
+		cjkFont?: {
+			fontFamily: string;
+			fontWeight: string | number;
+			localFonts: string[];
+			enableCompress: boolean;
+		};
+		zenMaruGothic?: {
+			enable: boolean; // 启用全局圆体适合日语和英语，对中文适配一般
+		};
+		hanalei?: {
+			enable: boolean; // 启用 Hanalei 字体作为全局字体，适合中文去使用
 		};
 	};
+
 
 	// 标签样式配置
 	tagStyle?: {
 		useNewStyle?: boolean; // 是否使用新样式（悬停高亮样式）还是旧样式（外框常亮样式）
 	};
 
+	// 壁纸模式配置
+	wallpaperMode: {
+		defaultMode: "banner" | "fullscreen" | "none"; // 默认壁纸模式：banner=顶部横幅，fullscreen=全屏壁纸，none=无壁纸
+		showModeSwitchOnMobile?: "off" | "mobile" | "desktop" | "both"; // 整体布局方案切换按钮显示设置：off=隐藏，mobile=仅移动端，desktop=仅桌面端，both=全部显示
+	};
+
 	banner: {
-		enable: boolean;
+		enable?: boolean; // 是否启用Banner壁纸模式
 		src:
 			| string
 			| string[]
@@ -104,6 +127,7 @@ export type SiteConfig = {
 	toc: {
 		enable: boolean;
 		depth: 1 | 2 | 3;
+		useJapaneseBadge?: boolean; // 使用日语假名标记（あいうえお...）代替数字
 	};
 	generateOgImages: boolean;
 	favicon: Favicon[];
@@ -174,6 +198,8 @@ type TwikooConfig = {
 
 export type LIGHT_DARK_MODE = typeof LIGHT_MODE | typeof DARK_MODE;
 
+export type WALLPAPER_MODE = typeof WALLPAPER_BANNER | typeof WALLPAPER_FULLSCREEN | typeof WALLPAPER_NONE;
+
 export type BlogPostData = {
 	body: string;
 	title: string;
@@ -192,6 +218,7 @@ export type BlogPostData = {
 
 export type ExpressiveCodeConfig = {
 	theme: string;
+	hideDuringThemeTransition?: boolean; // 是否在主题切换时隐藏代码块
 };
 
 export type AnnouncementConfig = {
@@ -211,6 +238,11 @@ export type AnnouncementConfig = {
 
 export type MusicPlayerConfig = {
 	enable: boolean; // 是否启用音乐播放器功能
+	mode?: "meting" | "local"; // 音乐播放器模式
+	meting_api?: string; // Meting API 地址
+	id?: string; // 歌单ID
+	server?: string; // 音乐源服务器
+	type?: string; // 音乐类型
 };
 
 export type FooterConfig = {
@@ -226,6 +258,9 @@ export type WidgetComponentType =
 	| "tags"
 	| "toc"
 	| "music-player"
+	| "pio" // 添加 pio 组件类型
+	| "site-stats" // 站点统计组件
+	| "calendar" // 日历组件
 	| "custom";
 
 export type WidgetComponentConfig = {
@@ -233,6 +268,7 @@ export type WidgetComponentConfig = {
 	enable: boolean; // 是否启用该组件
 	order: number; // 显示顺序，数字越小越靠前
 	position: "top" | "sticky"; // 组件位置：顶部固定区域或粘性区域
+	sidebar?: "left" | "right"; // 组件所在侧边栏：左侧或右侧（仅当启用双侧边栏时有效）
 	class?: string; // 自定义CSS类名
 	style?: string; // 自定义内联样式
 	animationDelay?: number; // 动画延迟时间（毫秒）
@@ -244,8 +280,8 @@ export type WidgetComponentConfig = {
 };
 
 export type SidebarLayoutConfig = {
-	enable: boolean; // 是否启用侧边栏
-	position: "left" | "right"; // 侧边栏位置：左侧或右侧
+	enable?: boolean; // 是否启用侧边栏功能
+	position: "unilateral" | "both" | "left" | "right"; // 侧边栏位置：单侧、双侧、左侧或右侧
 	components: WidgetComponentConfig[]; // 组件配置列表
 	defaultAnimation: {
 		enable: boolean; // 是否启用默认动画
@@ -266,8 +302,35 @@ export type SidebarLayoutConfig = {
 	};
 };
 
+export type SakuraConfig = {
+	enable: boolean; // 是否启用樱花特效
+	sakuraNum: number; // 樱花数量，默认21
+	limitTimes: number; // 樱花越界限制次数，-1为无限循环
+	size: {
+		min: number; // 樱花最小尺寸倍数
+		max: number; // 樱花最大尺寸倍数
+	};
+	opacity: {
+		min: number; // 樱花最小不透明度
+		max: number; // 樱花最大不透明度
+	};
+	speed: {
+		horizontal: {
+			min: number; // 水平移动速度最小值
+			max: number; // 水平移动速度最大值
+		};
+		vertical: {
+			min: number; // 垂直移动速度最小值
+			max: number; // 垂直移动速度最大值
+		};
+		rotation: number; // 旋转速度
+		fadeSpeed: number; // 消失速度
+	};
+	zIndex: number; // 层级，确保樱花在合适的层级显示
+};
+
 export type FullscreenWallpaperConfig = {
-	enable: boolean; // 是否启用全屏壁纸功能
+	enable?: boolean; // 启用全屏壁纸功能,非Banner模式下生效
 	src:
 		| string
 		| string[]
@@ -283,4 +346,30 @@ export type FullscreenWallpaperConfig = {
 	zIndex?: number; // 层级，确保壁纸在合适的层级显示
 	opacity?: number; // 壁纸透明度，0-1之间
 	blur?: number; // 背景模糊程度，单位px
+};
+
+/**
+ * Pio 看板娘配置
+ */
+export type PioConfig = {
+	enable: boolean; // 是否启用看板娘
+	models?: string[]; // 模型文件路径数组
+	position?: "left" | "right"; // 看板娘位置
+	width?: number; // 看板娘宽度
+	height?: number; // 看板娘高度
+	mode?: "static" | "fixed" | "draggable"; // 展现模式
+	hiddenOnMobile?: boolean; // 是否在移动设备上隐藏
+	dialog?: {
+		welcome?: string | string[]; // 欢迎词
+		touch?: string | string[]; // 触摸提示
+		home?: string; // 首页提示
+		skin?: [string, string]; // 换装提示 [切换前, 切换后]
+		close?: string; // 关闭提示
+		link?: string; // 关于链接
+		custom?: Array<{
+			selector: string; // CSS选择器
+			type: "read" | "link"; // 类型
+			text?: string; // 自定义文本
+		}>;
+	};
 };

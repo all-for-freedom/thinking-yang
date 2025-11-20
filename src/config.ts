@@ -17,10 +17,14 @@ import { LinkPreset } from "./types/config";
 
 // 定义站点语言
 const SITE_LANG = "en"; // 语言代码，例如：'en', 'zh_CN', 'ja', 'zh_TW', 'ko' 等。
+const SITE_TIMEZONE = 8; //设置你的网站时区 from -12 to 12 default in UTC+8
 
 export const siteConfig: SiteConfig = {
 	title: "Shen Yang's Blog",
-	subtitle: "One demo website",
+	subtitle: "Keep Thinking",
+	siteURL: "https://all-for-freedom.github.io/", // 请替换为你的站点URL，以斜杠结尾
+
+	timeZone: SITE_TIMEZONE,
 
 	lang: SITE_LANG,
 
@@ -41,7 +45,7 @@ export const siteConfig: SiteConfig = {
 	// 顶栏标题配置
 	navbarTitle: {
 		// 顶栏标题文本
-		text: "Shen Yang",
+		text: "Thinking Yang",
 		// 顶栏标题图标路径，默认使用 public/assets/home/home.png
 		icon: "assets/home/home.png",
 	},
@@ -60,25 +64,37 @@ export const siteConfig: SiteConfig = {
 		useNewStyle: false,
 	},
 
+	// 壁纸模式配置
+	wallpaperMode: {
+		defaultMode: "banner", // 默认壁纸模式：banner=顶部横幅，fullscreen=全屏壁纸，none=无壁纸
+		showModeSwitchOnMobile: "both", // 整体布局方案切换按钮显示设置：off=隐藏，mobile=仅移动端，desktop=仅桌面端，both=全部显示
+	},
+
 	banner: {
 		enable: true, // 是否启动Banner壁纸模式
 
 		// 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播
 		src: {
 			desktop: [
-				"/assets/desktop-banner/blue.webp",
+				"/assets/desktop-banner/2.webp",
+				"/assets/desktop-banner/3.webp",
+				"/assets/desktop-banner/6.webp",
+				"/assets/desktop-banner/7.webp",
 			], // 桌面横幅图片
 			mobile: [
-				"/assets/desktop-banner/blue.webp",
+				"/assets/desktop-banner/2.webp",
+				"/assets/desktop-banner/3.webp",
+				"/assets/desktop-banner/6.webp",
+				"/assets/desktop-banner/7.webp",
 			], // 移动横幅图片
 		}, // 使用本地横幅图片
 
 		position: "center", // 等同于 object-position，仅支持 'top', 'center', 'bottom'。默认为 'center'
 
 		carousel: {
-			enable: true, // 为 true 时：为多张图片启用轮播。为 false 时：从数组中随机显示一张图片
+			enable: true, // 为 true 时：为多张图片启用轮播。为 false 时：从数组中随机显示一张图片（Banner Mode 保持静态，不切换）
 
-			interval: 1.5, // 轮播间隔时间（秒）
+			interval: 4, // 轮播间隔时间（秒）（当前未使用，因为 enable: false）
 		},
 
 		waves: {
@@ -155,16 +171,22 @@ export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
 	enable: true, // 启用全屏壁纸功能,非Banner模式下生效
 	src: {
 		desktop: [
-			"/assets/desktop-banner/blue.webp",
+			"/assets/desktop-banner/2.webp",
+			"/assets/desktop-banner/3.webp",
+			"/assets/desktop-banner/6.webp",
+			"/assets/desktop-banner/7.webp",
 		], // 桌面横幅图片
 		mobile: [
-			"/assets/desktop-banner/blue.webp",
+			"/assets/desktop-banner/2.webp",
+			"/assets/desktop-banner/3.webp",
+			"/assets/desktop-banner/6.webp",
+			"/assets/desktop-banner/7.webp",
 		], // 移动横幅图片
 	}, // 使用本地横幅图片
 	position: "center", // 壁纸位置，等同于 object-position
 	carousel: {
 		enable: true, // 启用轮播
-		interval: 1, // 轮播间隔时间（秒）
+		interval: 4, // 轮播间隔时间（秒）
 	},
 	zIndex: -1, // 层级，确保壁纸在背景层
 	opacity: 0.8, // 壁纸透明度
@@ -289,8 +311,8 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	// 是否启用侧边栏功能
 	enable: true,
 
-	// 侧边栏位置：左侧或右侧
-	position: "left",
+	// 侧边栏位置：左侧、右侧或双侧
+	position: "both",
 
 	// 侧边栏组件配置列表
 	components: [
@@ -359,6 +381,39 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 				// 折叠阈值：当标签数量超过20个时自动折叠
 				collapseThreshold: 20,
 			},
+		},
+		// 右侧边栏组件示例（当 position 设置为 "both" 时启用）
+		{
+			// 组件类型：站点统计组件
+			type: "site-stats",
+			// 是否启用该组件
+			enable: true,
+			// 组件显示顺序
+			order: 1,
+			// 组件位置："top" 表示固定在顶部
+			position: "top",
+			// 指定该组件属于右侧边栏
+			sidebar: "right",
+			// CSS 类名
+			class: "onload-animation",
+			// 动画延迟时间
+			animationDelay: 0,
+		},
+		{
+			// 组件类型：日历组件
+			type: "calendar",
+			// 是否启用该组件
+			enable: true,
+			// 组件显示顺序
+			order: 2,
+			// 组件位置："sticky" 表示粘性定位
+			position: "sticky",
+			// 指定该组件属于右侧边栏
+			sidebar: "right",
+			// CSS 类名
+			class: "onload-animation",
+			// 动画延迟时间
+			animationDelay: 50,
 		},
 	],
 

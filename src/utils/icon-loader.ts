@@ -86,6 +86,13 @@ class IconLoader {
 	 */
 	private loadScript(timeout: number): Promise<void> {
 		return new Promise((resolve, reject) => {
+			// 检查是否在浏览器环境中
+			if (typeof document === 'undefined') {
+				// 在服务端环境中，直接返回（图标会在客户端加载）
+				resolve();
+				return;
+			}
+
 			// 检查是否已经存在脚本
 			const existingScript = document.querySelector(
 				'script[src*="iconify-icon"]',
@@ -130,6 +137,12 @@ class IconLoader {
 	 */
 	private waitForIconifyReady(maxWait = 5000): Promise<void> {
 		return new Promise((resolve, reject) => {
+			// 检查是否在浏览器环境中
+			if (typeof window === 'undefined') {
+				resolve();
+				return;
+			}
+
 			const startTime = Date.now();
 
 			const checkReady = () => {
@@ -154,6 +167,10 @@ class IconLoader {
 	 * 检查Iconify是否准备就绪
 	 */
 	private isIconifyReady(): boolean {
+		// 检查是否在浏览器环境中
+		if (typeof window === 'undefined') {
+			return false;
+		}
 		return (
 			typeof window !== "undefined" &&
 			"customElements" in window &&

@@ -10,7 +10,7 @@ if (!siteConfig.featurePages.diary) {
 }
 
 // 示例即刻短文数据
-const moments = [
+const moments: Array<{content: string; date: string; images?: string[]}> = [
 	// {
 	// 	id: 1,
 	// 	content:
@@ -19,6 +19,7 @@ const moments = [
 	// 	images: ["/images/diary/sakura.jpg", "/images/diary/1.jpg"],
 	// },
 ];
+const diaryStats = { total: moments.length };
 
 // 时间格式化函数
 function formatTime(dateString: string): string {
@@ -44,7 +45,7 @@ function formatTime(dateString: string): string {
 <MainGridLayout title={i18n(I18nKey.diary)} description="即刻短文">
 	<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
 		<div class="card-base z-10 px-4 py-4 md:px-6 md:py-5 relative w-full">
-			<div class="relative max-w-4xl">
+		<div class="relative max-w-4xl w-full px-2 md:px-0">
 				<!-- 页面头部 -->
 				<div class="moments-header mb-6">
 					<div class="header-content">
@@ -75,7 +76,7 @@ function formatTime(dateString: string): string {
 					<div class="image-item relative rounded-md overflow-hidden aspect-square cursor-pointer hover:scale-105 transition-transform">
 						<img 
 							src={image} 
-							alt={i18n(I18nKey.diaryImage)}
+							alt="diary moment image"
 							class="w-full h-full object-cover"
 							loading="lazy"
 						/>
@@ -250,10 +251,6 @@ function formatTime(dateString: string): string {
 	
 	/* 优化小屏幕显示 */
 	@media (max-width: 480px) {
-		.card-base {
-			margin: 0 -0.5rem;
-		}
-		
 		.moment-item {
 			border-radius: 8px;
 		}

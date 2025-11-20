@@ -10,7 +10,10 @@ const posts = (await getSortedPosts()).filter((post) => !post.data.encrypted);
 const recentPosts = posts.slice(0, 6);
 ---
 
-<MainGridLayout title={i18n(I18nKey.rss)} description={i18n(I18nKey.rssDescription)}>
+<MainGridLayout title={i18n(I18nKey.rss)}>
+	<!-- 引入右侧边栏布局管理器 -->
+  <script>
+  </script>
     <div class="onload-animation">
         <!-- RSS 标题和介绍 -->
         <div class="card-base rounded-[var(--radius-large)] p-8 mb-6">

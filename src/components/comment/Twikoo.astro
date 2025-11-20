@@ -13,8 +13,24 @@ const config = {
 ---
 
 <div id="tcomment"></div>
-<script is:inline src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js"></script>
+<script is:inline src="/scroll-protection.js"></script>
+<script is:inline src="/assets/js/twikoo.all.min.js"></script>
 <script is:inline define:vars={{ config }}>
+  // 获取当前页面路径
+  function getCurrentPath() {
+    const pathname = window.location.pathname;
+    return pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
+  }
+  
+  // 动态创建配置对象
+  function createTwikooConfig() {
+    return {
+      ...config,
+      path: getCurrentPath(),
+      el: '#tcomment'
+    };
+  }
+  
   // 初始化 Twikoo
   function initTwikoo() {
     if (typeof twikoo !== 'undefined') {
@@ -22,9 +38,10 @@ const config = {
       if (commentEl) {
         commentEl.innerHTML = '';
         
-        console.log('[Twikoo] 初始化配置:', config);
+        const dynamicConfig = createTwikooConfig();
+        console.log('[Twikoo] 初始化配置:', dynamicConfig);
         
-        twikoo.init(config).then(() => {
+        twikoo.init(dynamicConfig).then(() => {
           console.log('[Twikoo] 初始化完成');
         }).catch((error) => {
           console.error('[Twikoo] 初始化失败:', error);

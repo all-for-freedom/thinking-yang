@@ -7,13 +7,12 @@ website: [Shenyang's Blog](https://all-for-freedom.github.io/thinking-yang/)
 🌏 README Languages
 [**English**](./README.md) /
 [**中文**](./README.zh.md) /
-[**日本語**](./docs/README.ja.md) /
-[**中文繁体**](./docs/README.tw.md) /
-[**한국어**](./docs/README.ko.md) /
+[**日本語**](./README.ja.md) /
+[**中文繁体**](./README.tw.md)
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgements
 
