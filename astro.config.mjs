@@ -1,10 +1,10 @@
-import { defineConfig } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
+import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -15,7 +15,7 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
-import { expressiveCodeConfig } from "./src/config.ts";
+import { expressiveCodeConfig, siteConfig } from "./src/config.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
@@ -27,7 +27,7 @@ import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 // https://astro.build/config
 export default defineConfig({
-	site: "https://all-for-freedom.github.io/",
+	site: siteConfig.siteURL,
 
 	base: import.meta.env.DEV ? '/' : '/thinking-yang',
 	trailingSlash: "always",
@@ -67,7 +67,7 @@ export default defineConfig({
 			},
 		}),
 		expressiveCode({
-			themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
+			themes: ["github-light", "github-dark"],
 			plugins: [
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
@@ -79,6 +79,18 @@ export default defineConfig({
 				overridesByLang: {
 					shellsession: {
 						showLineNumbers: false,
+					},
+					bash: {
+						frame: 'code',
+					},
+					shell: {
+						frame: 'code',
+					},
+					sh: {
+						frame: 'code',
+					},
+					zsh: {
+						frame: 'code',
 					},
 				},
 			},
@@ -93,12 +105,12 @@ export default defineConfig({
 				frames: {
 					editorBackground: "var(--codeblock-bg)",
 					terminalBackground: "var(--codeblock-bg)",
-					terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
-					editorTabBarBackground: "var(--codeblock-topbar-bg)",
+					terminalTitlebarBackground: "var(--codeblock-bg)",
+					editorTabBarBackground: "var(--codeblock-bg)",
 					editorActiveTabBackground: "none",
 					editorActiveTabIndicatorBottomColor: "var(--primary)",
 					editorActiveTabIndicatorTopColor: "none",
-					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
+					editorTabBarBorderBottomColor: "var(--codeblock-bg)",
 					terminalTitlebarBorderBottomColor: "none",
 				},
 				textMarkers: {
@@ -166,9 +178,6 @@ export default defineConfig({
 				},
 			],
 		],
-	},
-	server: {
-		port: 4321,
 	},
 	vite: {
 		build: {

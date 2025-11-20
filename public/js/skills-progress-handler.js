@@ -153,3 +153,4 @@
 		setTimeout(initProgressAnimation, 10);
 	}
 })();
+

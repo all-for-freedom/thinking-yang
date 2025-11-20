@@ -1,8 +1,8 @@
 ---
-import { siteConfig } from "../config";
 import Icon from "../components/misc/Icon.astro";
 import IconifyLoader from "../components/misc/IconifyLoader.astro";
 import SkillsChart from "../components/skills/SkillsChart.astro";
+import { siteConfig } from "../config";
 import { UNCATEGORIZED } from "../constants/constants";
 import {
 	getAdvancedSkills,
@@ -13,6 +13,7 @@ import {
 } from "../data/skills";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
+
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 // 检查技能页面是否启用
@@ -43,15 +44,15 @@ const skillsByCategory = categories.reduce(
 const getLevelColor = (level: string) => {
 	switch (level) {
 		case "expert":
-			return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
+			return "bg-red-600/20 text-red-700 dark:bg-red-900/30 dark:text-red-400";
 		case "advanced":
-			return "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400";
+			return "bg-orange-600/20 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400";
 		case "intermediate":
-			return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400";
+			return "bg-yellow-600/20 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400";
 		case "beginner":
-			return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
+			return "bg-green-600/20 text-green-700 dark:bg-green-900/30 dark:text-green-400";
 		default:
-			return "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400";
+			return "bg-gray-600/20 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400";
 	}
 };
 
@@ -104,6 +105,14 @@ let animated = false;
 ---
 
 <MainGridLayout title={title} description={subtitle}>
+  <!-- 设置页面类型属性 -->
+  <script is:inline>
+    document.documentElement.setAttribute('data-page-type', 'skills');
+  </script>
+  
+  <!-- 引入右侧边栏布局管理器 -->
+  <script>
+  </script>
   <!-- 图标加载器，预加载所有技能图标 -->
   <IconifyLoader preloadIcons={allIcons} />
   <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">

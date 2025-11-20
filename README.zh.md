@@ -7,13 +7,12 @@ website: [沈阳的博客](https://all-for-freedom.github.io/thinking-yang/)
 🌏 README 语言
 [**English**](./README.md) /
 [**中文**](./README.zh.md) /
-[**日本語**](./docs/README.ja.md) /
-[**中文繁体**](./docs/README.tw.md) /
-[**한국어**](./docs/README.ko.md) /
+[**日本語**](./README.ja.md) /
+[**中文繁体**](./README.tw.md)
 
 ## 📄 许可证
 
-本项目基于 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目基于 Apache License 2.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 🙏 致谢
 

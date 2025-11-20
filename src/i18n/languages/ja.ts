@@ -8,6 +8,12 @@ export const ja: Translation = {
 	[Key.search]: "検索",
 	[Key.other]: "その他",
 
+	// ナビゲーションバータイトル
+	[Key.navLinks]: "リンク",
+	[Key.navMy]: "私の",
+	[Key.navAbout]: "About",
+	[Key.navOthers]: "その他",
+
 	[Key.tags]: "タグ",
 	[Key.categories]: "カテゴリ",
 	[Key.recentPosts]: "最近の投稿",
@@ -19,6 +25,15 @@ export const ja: Translation = {
 	[Key.announcementClose]: "閉じる",
 
 	[Key.comments]: "コメント",
+	[Key.friends]: "友達",
+	[Key.friendsSubtitle]: "より優れたウェブサイトを見つける",
+	[Key.friendsSearchPlaceholder]: "友達の名前または説明を検索...",
+	[Key.friendsFilterAll]: "すべて",
+	[Key.friendsNoResults]: "一致する友達が見つかりません",
+	[Key.friendsVisit]: "訪問",
+	[Key.friendsCopyLink]: "リンクをコピー",
+	[Key.friendsCopySuccess]: "コピー済み",
+	[Key.friendsTags]: "タグ",
 	[Key.untitled]: "無題",
 	[Key.uncategorized]: "未分類",
 	[Key.noTags]: "タグなし",
@@ -41,12 +56,34 @@ export const ja: Translation = {
 	[Key.author]: "著者",
 	[Key.publishedAt]: "公開日",
 	[Key.license]: "ライセンス",
+	[Key.anime]: "アニメ",
 	[Key.diary]: "日記",
+	[Key.gallery]: "ギャラリー",
+
+	// デバイスページ
+	[Key.devices]: "私のデバイス",
+	[Key.devicesSubtitle]: "ここに私の日常で使用するデバイスを表示します",
+
+	// アニメページ
+	[Key.animeTitle]: "私のアニメリスト",
+	[Key.animeSubtitle]: "私の二次元の旅を記録する",
+	[Key.animeStatusWatching]: "視聴中",
+	[Key.animeStatusCompleted]: "完了",
+	[Key.animeStatusPlanned]: "予定",
+	[Key.animeStatusOnHold]: "一時停止",
+	[Key.animeStatusDropped]: "中断",
+	[Key.animeFilterAll]: "すべて",
+	[Key.animeYear]: "年",
+	[Key.animeStudio]: "スタジオ",
+	[Key.animeEmpty]: "アニメデータなし",
+	[Key.animeEmptyBangumi]:
+		"Bangumiの設定またはネットワーク接続を確認してください",
+	[Key.animeEmptyLocal]:
+		"src/data/anime.tsファイルにアニメ情報を追加してください",
 
 	// 日記ページ
 	[Key.diarySubtitle]: "いつでもどこでも、生活を共有する",
 	[Key.diaryCount]: "日記エントリ",
-	[Key.diaryImage]: "画像",
 	[Key.diaryReply]: "返信",
 	[Key.diaryTips]: "最新の30件の日記エントリのみを表示",
 	[Key.diaryMinutesAgo]: "分前",
@@ -166,7 +203,6 @@ export const ja: Translation = {
 	[Key.skillsIntermediate]: "中級者",
 	[Key.skillsBeginner]: "初心者",
 	[Key.skillsAdvancedTitle]: "専門スキル",
-	[Key.skillProject]: "プロジェクト",
 	[Key.skillsProjects]: "関連プロジェクト",
 	[Key.skillsDistribution]: "スキル分布",
 	[Key.skillsByLevel]: "レベル別分布",
@@ -193,11 +229,6 @@ export const ja: Translation = {
 	[Key.timelineStartDate]: "開始日",
 	[Key.timelineDuration]: "期間",
 
-	// プロジェクト展示ページ
-	[Key.projectsVisit]: "プロジェクトへ",
-	[Key.projectsGitHub]: "GitHub",
-	[Key.projectsGitee]: "Gitee",
-	
 	// その他
 	[Key.noData]: "データなし",
 
@@ -232,4 +263,41 @@ export const ja: Translation = {
 	[Key.hour]: "時間",
 	[Key.minute]: "分",
 	[Key.second]: "秒",
+
+	// 壁紙モード
+	[Key.wallpaperBanner]: "バナーモード",
+	[Key.wallpaperFullscreen]: "全画面モード",
+	[Key.wallpaperNone]: "壁紙を非表示",
+
+	// サイト統計
+	[Key.siteStats]: "サイト統計",
+	[Key.siteStatsPostCount]: "記事数",
+	[Key.siteStatsCategoryCount]: "カテゴリー数",
+	[Key.siteStatsTagCount]: "タグ数",
+	[Key.siteStatsTotalWords]: "総字数",
+	[Key.siteStatsRunningDays]: "運用日数",
+	[Key.siteStatsLastUpdate]: "最終更新",
+	[Key.siteStatsDaysAgo]: "{days}日前",
+	[Key.siteStatsDays]: "{days}日",
+
+	// カレンダーコンポーネント
+	[Key.calendarSunday]: "日",
+	[Key.calendarMonday]: "月",
+	[Key.calendarTuesday]: "火",
+	[Key.calendarWednesday]: "水",
+	[Key.calendarThursday]: "木",
+	[Key.calendarFriday]: "金",
+	[Key.calendarSaturday]: "土",
+	[Key.calendarJanuary]: "1月",
+	[Key.calendarFebruary]: "2月",
+	[Key.calendarMarch]: "3月",
+	[Key.calendarApril]: "4月",
+	[Key.calendarMay]: "5月",
+	[Key.calendarJune]: "6月",
+	[Key.calendarJuly]: "7月",
+	[Key.calendarAugust]: "8月",
+	[Key.calendarSeptember]: "9月",
+	[Key.calendarOctober]: "10月",
+	[Key.calendarNovember]: "11月",
+	[Key.calendarDecember]: "12月",
 };

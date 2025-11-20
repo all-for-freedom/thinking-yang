@@ -45,5 +45,3 @@ interface SearchResult {
 	raw_url?: string;
 	sub_results?: SearchResult[];
 }
-
-export {};

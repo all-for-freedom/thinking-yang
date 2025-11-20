@@ -7,8 +7,6 @@
 
 ## Checklist
 
-- [ ] I have read the [**CONTRIBUTING**](https://github.com/saicaca/fuwari/blob/main/CONTRIBUTING.md) document.
-- [ ] I have checked to ensure that this Pull Request is not for personal changes.
 - [ ] I have performed a self-review of my own code.
 - [ ] My changes generate no new warnings.
 

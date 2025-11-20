@@ -13,17 +13,6 @@ import { i18n } from "../../i18n/translation";
 // 导入路径工具函数
 import { getAssetPath } from "../../utils/url-utils";
 
-// 定义播放列表项类型
-interface PlaylistItem {
-	id: number | string;
-	title: string;
-	artist: string;
-	cover: string;
-	url: string;
-	duration: number;
-}
-
-// 音乐播放器使用本地播放列表
 // 播放状态，默认为 false (未播放)
 let isPlaying = false;
 // 播放器是否展开，默认为 false
@@ -44,8 +33,8 @@ let isMuted = false;
 let isLoading = false;
 // 是否随机播放，默认为 false
 let isShuffled = false;
-// 循环模式，0: 不循环, 1: 单曲循环, 2: 列表循环，默认为 2（列表循环）
-let isRepeating = 2;
+// 循环模式，0: 不循环, 1: 单曲循环, 2: 列表循环，默认为 0
+let isRepeating = 0;
 // 错误信息，默认为空字符串
 let errorMessage = "";
 // 是否显示错误信息，默认为 false
@@ -61,6 +50,18 @@ let currentSong: PlaylistItem = {
 	duration: 0,
 };
 
+// 定义播放列表项类型
+interface PlaylistItem {
+	id: number | string;
+	title: string;
+	artist: string;
+	cover: string;
+	url: string;
+	duration: number;
+}
+
+// 音乐播放器使用本地播放列表
+// 播放状态，默认为 false (未播放)
 let playlist: PlaylistItem[] = [];
 let currentIndex = 0;
 let audio: HTMLAudioElement;
@@ -68,6 +69,7 @@ let progressBar: HTMLElement;
 let volumeBar: HTMLElement;
 
 const localPlaylist: PlaylistItem[] = [];
+
 
 function togglePlay() {
 	if (!audio || !currentSong.url) return;
@@ -149,6 +151,7 @@ function playSong(index: number) {
 	}
 }
 
+
 function loadSong(song: typeof currentSong) {
 	if (!song || !audio) return;
 	currentSong = { ...song };
@@ -180,7 +183,7 @@ function handleLoadSuccess() {
 	}
 }
 
-function handleLoadError(event: Event) {
+function handleLoadError(_event: Event) {
 	isLoading = false;
 	showErrorMessage(`无法播放 "${currentSong.title}"，正在尝试下一首...`);
 	if (playlist.length > 1) setTimeout(() => nextSong(), 1000);
@@ -234,51 +237,36 @@ function formatTime(seconds: number): string {
 	return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
-// 定义具名事件处理函数，便于清理
-function handlePlay() {
-	isPlaying = true;
-}
-
-function handlePause() {
-	isPlaying = false;
-}
-
-function handleTimeUpdate() {
-	currentTime = audio.currentTime;
-}
-
-function handleEnded() {
-	if (isRepeating === 1) {
-		audio.currentTime = 0;
-		audio.play().catch(() => {});
-	} else if (
-		isRepeating === 2 ||
-		currentIndex < playlist.length - 1 ||
-		isShuffled
-	) {
-		nextSong();
-	} else {
-		isPlaying = false;
-	}
-}
-
-function handleError() {
-	isLoading = false;
-}
-
-function handleStalled() {}
-
-function handleWaiting() {}
-
 function handleAudioEvents() {
 	if (!audio) return;
-	audio.addEventListener("play", handlePlay);
-	audio.addEventListener("pause", handlePause);
-	audio.addEventListener("timeupdate", handleTimeUpdate);
-	audio.addEventListener("ended", handleEnded);
-	audio.addEventListener("error", handleError);
-	audio.addEventListener("stalled", handleStalled);
-	audio.addEventListener("waiting", handleWaiting);
+	audio.addEventListener("play", () => {
+		isPlaying = true;
+	});
+	audio.addEventListener("pause", () => {
+		isPlaying = false;
+	});
+	audio.addEventListener("timeupdate", () => {
+		currentTime = audio.currentTime;
+	});
+	audio.addEventListener("ended", () => {
+		if (isRepeating === 1) {
+			audio.currentTime = 0;
+			audio.play().catch(() => {});
+		} else if (
+			isRepeating === 2 ||
+			currentIndex < playlist.length - 1 ||
+			isShuffled
+		) {
+			nextSong();
+		} else {
+			isPlaying = false;
+		}
+	});
+	audio.addEventListener("error", (_event) => {
+		isLoading = false;
+	});
+	audio.addEventListener("stalled", () => {});
+	audio.addEventListener("waiting", () => {});
 }
 
 onMount(async () => {
@@ -312,21 +300,8 @@ onMount(async () => {
 
 onDestroy(() => {
 	if (audio) {
-		// 移除所有事件监听器
-		audio.removeEventListener("play", handlePlay);
-		audio.removeEventListener("pause", handlePause);
-		audio.removeEventListener("timeupdate", handleTimeUpdate);
-		audio.removeEventListener("ended", handleEnded);
-		audio.removeEventListener("error", handleError);
-		audio.removeEventListener("stalled", handleStalled);
-		audio.removeEventListener("waiting", handleWaiting);
-		// 停止播放并清空
 		audio.pause();
 		audio.src = "";
-		// 断开音频源
-		if (audio.srcObject) {
-			audio.srcObject = null;
-		}
 	}
 });
 </script>
@@ -378,19 +353,20 @@ onDestroy(() => {
     <div class="mini-player card-base bg-[var(--float-panel-bg)] shadow-xl rounded-2xl p-3 transition-all duration-500 ease-in-out"
          class:opacity-0={isExpanded || isHidden}
          class:scale-95={isExpanded || isHidden}
-         class:pointer-events-none={isExpanded || isHidden}
-         on:click={toggleExpanded}
-         on:keydown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleExpanded();
-            }
-         }}
-         role="button"
-         tabindex="0"
-         aria-label="展开音乐播放器">
-        <div class="flex items-center gap-3 cursor-pointer">
-            <div class="cover-container relative w-12 h-12 rounded-full overflow-hidden">
+         class:pointer-events-none={isExpanded || isHidden}>
+        <div class="flex items-center gap-3">
+            <!-- 封面区域：点击控制播放/暂停 -->
+            <div class="cover-container relative w-12 h-12 rounded-full overflow-hidden cursor-pointer"
+                 on:click={togglePlay}
+                 on:keydown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        togglePlay();
+                    }
+                 }}
+                 role="button"
+                 tabindex="0"
+                 aria-label={isPlaying ? '暂停' : '播放'}>
                 <img src={getAssetPath(currentSong.cover)} alt="封面"
                      class="w-full h-full object-cover transition-transform duration-300"
                      class:spinning={isPlaying && !isLoading}
@@ -405,7 +381,18 @@ onDestroy(() => {
                     {/if}
                 </div>
             </div>
-            <div class="flex-1 min-w-0">
+            <!-- 歌曲信息区域：点击展开播放器 -->
+            <div class="flex-1 min-w-0 cursor-pointer"
+                 on:click={toggleExpanded}
+                 on:keydown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleExpanded();
+                    }
+                 }}
+                 role="button"
+                 tabindex="0"
+                 aria-label="展开音乐播放器">
                 <div class="text-sm font-medium text-90 truncate">{currentSong.title}</div>
                 <div class="text-xs text-50 truncate">{currentSong.artist}</div>
             </div>

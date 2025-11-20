@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { AlbumGroup, Photo } from "../data/albums";
+import type { AlbumGroup, Photo } from "../data/1";
 
 export async function scanAlbums(): Promise<AlbumGroup[]> {
 	const albumsDir = path.join(process.cwd(), "public/images/albums");

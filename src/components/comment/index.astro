@@ -9,9 +9,7 @@ interface Props {
 
 const { id, data, slug } = Astro.props.post;
 
-// 使用 BASE_URL 确保路径包含 base 前缀（在生产环境中是 '/thinking-yang'）
-const baseUrl = import.meta.env.BASE_URL;
-const path = `${baseUrl}posts/${slug}`.replace(/\/+/g, '/'); // 确保路径格式正确，移除多余的斜杠
+const path = `/posts/${slug}`;
 const url = `${Astro.site?.href}${path}`;
 
 let commentService = "";
