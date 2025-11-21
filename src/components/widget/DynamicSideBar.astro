@@ -13,7 +13,7 @@ import TOC from "./TOC.astro";
 interface Props {
 	class?: string;
 	headings?: MarkdownHeading[];
-	customComponents?: Record<string, any>; // 允许传入自定义组件
+	customComponents?: Record<string, unknown>; // 允许传入自定义组件
 }
 
 const { class: className, headings, customComponents = {} } = Astro.props;
@@ -42,7 +42,7 @@ const componentMap = {
 function createComponentRenderer(
 	component: WidgetComponentConfig,
 	index: number,
-	allComponents: WidgetComponentConfig[],
+	_allComponents: WidgetComponentConfig[],
 ) {
 	const ComponentToRender =
 		componentMap[component.type as keyof typeof componentMap];

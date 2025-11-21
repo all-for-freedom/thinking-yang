@@ -35,8 +35,8 @@ const setPanelVisibility = async (show: boolean): Promise<void> => {
 
 const generateTOC = () => {
 	// 获取配置
-	useJapaneseBadge = (window as any).siteConfig?.toc?.useJapaneseBadge || false;
-	tocDepth = (window as any).siteConfig?.toc?.depth || 3;
+	useJapaneseBadge = window.siteConfig?.toc?.useJapaneseBadge || false;
+	tocDepth = window.siteConfig?.toc?.depth || 3;
 
 	const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
 	const items: Array<{

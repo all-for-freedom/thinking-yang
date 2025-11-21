@@ -121,8 +121,8 @@ async function getPanelManager() {
     }
 }
 
-function createSettingHandler(panelManager) {
-    return async function(e) {
+function createSettingHandler(panelManager: { togglePanel: (id: string) => Promise<boolean> } | null) {
+    return async function(e: Event) {
         e.preventDefault();
         e.stopPropagation();
         
@@ -147,8 +147,8 @@ function createSettingHandler(panelManager) {
     };
 }
 
-function createMenuHandler(panelManager) {
-    return async function(e) {
+function createMenuHandler(panelManager: { togglePanel: (id: string) => Promise<boolean> } | null) {
+    return async function(e: Event) {
         e.preventDefault();
         e.stopPropagation();
         

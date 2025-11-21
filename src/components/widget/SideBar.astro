@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+import type { WidgetComponentConfig } from "../../types/config";
 import { widgetManager } from "../../utils/widget-manager";
 import Announcement from "./Announcement.astro";
 import Calendar from "./Calendar.astro";
@@ -42,7 +43,11 @@ const componentMap = {
 };
 
 // 渲染组件的辅助函数
-function renderComponent(component: any, index: number, _components: any[]) {
+function renderComponent(
+	component: WidgetComponentConfig,
+	index: number,
+	_components: WidgetComponentConfig[],
+) {
 	const ComponentToRender =
 		componentMap[component.type as keyof typeof componentMap];
 	if (!ComponentToRender) return null;

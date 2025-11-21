@@ -8,7 +8,6 @@ interface IconifyLoadOptions {
 }
 
 class IconLoader {
-	private static instance: IconLoader;
 	private isLoaded = false;
 	private isLoading = false;
 	private loadPromise: Promise<void> | null = null;

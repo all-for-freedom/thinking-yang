@@ -11,7 +11,6 @@ export interface AnimationConfig {
 }
 
 export class AnimationManager {
-	private static instance: AnimationManager;
 	private isAnimating = false;
 	private animationQueue: (() => void)[] = [];
 
