@@ -232,6 +232,27 @@ const transparentClass = shouldEnableTransparency
 		// 立即调整主内容区域位置和布局模式（避免闪烁和位置错误）
 		// 使用 requestAnimationFrame 确保 DOM 准备好
 		requestAnimationFrame(function() {
+			// 立即应用壁纸模式，确保 banner 和全屏壁纸正确显示
+			const bannerWrapper = document.getElementById('banner-wrapper');
+			const fullscreenWallpaper = document.querySelector('[data-fullscreen-wallpaper]');
+			
+			if (bannerWrapper && fullscreenWallpaper) {
+				switch(wallpaperMode) {
+					case 'banner':
+						bannerWrapper.style.display = 'block';
+						fullscreenWallpaper.style.display = 'none';
+						break;
+					case 'fullscreen':
+						bannerWrapper.style.display = 'none';
+						fullscreenWallpaper.style.display = 'block';
+						break;
+					case 'none':
+						bannerWrapper.style.display = 'none';
+						fullscreenWallpaper.style.display = 'none';
+						break;
+				}
+			}
+			
 			const mainContent = document.querySelector('.absolute.w-full.z-30.pointer-events-none');
 			if (mainContent) {
 				if (wallpaperMode === 'banner') {
