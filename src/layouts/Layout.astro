@@ -1008,7 +1008,6 @@ import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 // 使用单例模式避免重复初始化
-// @ts-expect-error - Fancybox.bind returns void but we track instances
 let fancyboxInstances: any[] = [];
 
 function initFancybox() {
@@ -1062,8 +1061,10 @@ function initFancybox() {
   };
   
   // 为相册图片添加 Fancybox 支持
-  // @ts-expect-error - Fancybox type definitions may not match actual API
+  // @ts-ignore - Fancybox type definitions may not match actual API
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   fancyboxInstances.push(
+    // @ts-ignore - Fancybox type definitions may not match actual API
     Fancybox.bind(".custom-md img, #post-cover img, .moment-images img", {
       ...commonConfig,
       groupAll: true,
@@ -1075,8 +1076,10 @@ function initFancybox() {
   );
   
   // 为相册中的链接添加 Fancybox 支持
-  // @ts-expect-error - Fancybox type definitions may not match actual API
+  // @ts-ignore - Fancybox type definitions may not match actual API
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   fancyboxInstances.push(
+    // @ts-ignore - Fancybox type definitions may not match actual API
     Fancybox.bind(".moment-images a[data-fancybox]", {
       ...commonConfig,
       source: (el: any) => {
@@ -1086,8 +1089,10 @@ function initFancybox() {
   );
   
   // 为单独的 fancybox 图片添加支持
-  // @ts-expect-error - Fancybox type definitions may not match actual API
+  // @ts-ignore - Fancybox type definitions may not match actual API
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   fancyboxInstances.push(
+    // @ts-ignore - Fancybox type definitions may not match actual API
     Fancybox.bind("[data-fancybox]:not(.moment-images a)", commonConfig)
   );
 }
@@ -1107,7 +1112,7 @@ const setup = () => {
   initFancybox();
   
   // 在页面视图更改时重新初始化
-  window.swup.hooks.on("page:view", () => {
+  window.swup?.hooks.on("page:view", () => {
     // 清理旧实例
     cleanupFancybox();
     // 等待 DOM 更新后初始化
