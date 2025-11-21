@@ -1,5 +1,4 @@
 import { getImage } from "astro:assets";
-import { getCollection } from "astro:content";
 import type { RSSFeedItem } from "@astrojs/rss";
 import rss from "@astrojs/rss";
 import type { APIContext, ImageMetadata } from "astro";
