@@ -1,4 +1,5 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import path from "node:path";
 import Comment from "@components/comment/index.astro";
 import License from "@components/misc/License.astro";
@@ -19,26 +20,30 @@ import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
-import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
-	const paths: { params: { slug: string }, props: { entry: CollectionEntry<"posts"> } }[] = [];
-	
+	const paths: {
+		params: { slug: string };
+		props: { entry: CollectionEntry<"posts"> };
+	}[] = [];
+
 	for (const entry of blogEntries) {
 		// 为每篇文章创建默认的 slug 路径
 		paths.push({
 			params: { slug: entry.slug },
 			props: { entry },
 		});
-		
+
 		// 如果文章有自定义固定链接，也创建对应的路径
 		if (entry.data.permalink) {
 			// 移除开头的斜杠和结尾的斜杠
 			// 同时移除可能的 "posts/" 前缀，避免重复
-			let permalink = entry.data.permalink.replace(/^\/+/, '').replace(/\/+$/, '');
-			if (permalink.startsWith('posts/')) {
-				permalink = permalink.replace(/^posts\//, '');
+			let permalink = entry.data.permalink
+				.replace(/^\/+/, "")
+				.replace(/\/+$/, "");
+			if (permalink.startsWith("posts/")) {
+				permalink = permalink.replace(/^posts\//, "");
 			}
 			paths.push({
 				params: { slug: permalink },
@@ -46,7 +51,7 @@ export async function getStaticPaths() {
 			});
 		}
 	}
-	
+
 	return paths;
 }
 

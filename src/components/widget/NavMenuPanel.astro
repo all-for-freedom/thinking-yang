@@ -1,10 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
-import { type NavBarLink, LinkPreset } from "../../types/config";
 import { LinkPresets } from "../../constants/link-presets";
-import { url } from "../../utils/url-utils";
 import I18nKey from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
+import { LinkPreset, type NavBarLink } from "../../types/config";
+import { url } from "../../utils/url-utils";
 
 interface Props {
 	links: NavBarLink[];
@@ -12,15 +12,15 @@ interface Props {
 
 // 国际化标题映射
 const navTitleMap: Record<string, string> = {
-	"Links": I18nKey.navLinks,
-	"My": I18nKey.navMy,
-	"About": I18nKey.navAbout,
-	"Others": I18nKey.navOthers,
-	"Diary": I18nKey.diary,
-	"Gallery": I18nKey.albums,
-	"Projects": I18nKey.projects,
-	"Skills": I18nKey.skills,
-	"Timeline": I18nKey.timeline,
+	Links: I18nKey.navLinks,
+	My: I18nKey.navMy,
+	About: I18nKey.navAbout,
+	Others: I18nKey.navOthers,
+	Diary: I18nKey.diary,
+	Gallery: I18nKey.albums,
+	Projects: I18nKey.projects,
+	Skills: I18nKey.skills,
+	Timeline: I18nKey.timeline,
 };
 
 // 获取国际化的标题

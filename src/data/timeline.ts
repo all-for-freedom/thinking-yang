@@ -34,9 +34,7 @@ export const timelineData: TimelineItem[] = [
 		location: "Hunan",
 		organization: "Hunan Normal University",
 		skills: ["Python", "C++", "MATLAB"],
-		achievements: [
-			"Current GPA: 3.9/5.0",
-		],
+		achievements: ["Current GPA: 3.9/5.0"],
 		icon: "material-symbols:school",
 		color: "#059669",
 		featured: true,
@@ -44,16 +42,13 @@ export const timelineData: TimelineItem[] = [
 	{
 		id: "win-3rd-in-balta",
 		title: "Baltamatica Scientific Competition",
-		description:
-			"Win 3rd prize in Baltamatica Scientific Competition",
+		description: "Win 3rd prize in Baltamatica Scientific Competition",
 		type: "achievement",
 		startDate: "2023-11-14",
 		location: "Beijing",
 		organization: "Baltamatica",
 		skills: ["C++", "Baltamatica"],
-		achievements: [
-			"build a useful plugin for baltamatica",
-		],
+		achievements: ["build a useful plugin for baltamatica"],
 		icon: "/icons/baltamatica.png",
 		color: "#059669",
 		featured: true,
@@ -76,7 +71,6 @@ export const timelineData: TimelineItem[] = [
 		icon: "material-symbols:school",
 		color: "#2563EB",
 	},
-
 ];
 
 // Get timeline statistics

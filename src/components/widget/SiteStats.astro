@@ -51,19 +51,22 @@ function formatNumber(num: number): string {
 const latestPost = posts.reduce((latest, post) => {
 	if (!latest) return post;
 	// 确保日期是 Date 对象，然后比较时间戳
-	const postDate = post.data.published instanceof Date 
-		? post.data.published 
-		: new Date(post.data.published);
-	const latestDate = latest.data.published instanceof Date 
-		? latest.data.published 
-		: new Date(latest.data.published);
+	const postDate =
+		post.data.published instanceof Date
+			? post.data.published
+			: new Date(post.data.published);
+	const latestDate =
+		latest.data.published instanceof Date
+			? latest.data.published
+			: new Date(latest.data.published);
 	return postDate.getTime() > latestDate.getTime() ? post : latest;
 }, posts[0]);
 
 const lastPostDate = latestPost
-	? (latestPost.data.published instanceof Date 
-		? latestPost.data.published 
-		: new Date(latestPost.data.published)).toISOString()
+	? (latestPost.data.published instanceof Date
+			? latestPost.data.published
+			: new Date(latestPost.data.published)
+		).toISOString()
 	: null;
 
 const stats = [

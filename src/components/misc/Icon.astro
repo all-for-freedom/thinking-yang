@@ -39,17 +39,20 @@ const combinedStyle = `${colorStyle}${style}`;
 const combinedClass = `${sizeClass} ${className}`.trim();
 
 // 判断是否是自定义图片路径（以 / 开头或者是 http 链接）
-const isCustomIcon = icon.startsWith('/') || icon.startsWith('http://') || icon.startsWith('https://');
+const isCustomIcon =
+	icon.startsWith("/") ||
+	icon.startsWith("http://") ||
+	icon.startsWith("https://");
 
 // 生成唯一ID
 const iconId = `icon-${Math.random().toString(36).substr(2, 9)}`;
 
 // 处理图标路径，确保正确处理base URL
-const iconSrc = isCustomIcon 
-  ? (icon.startsWith('http://') || icon.startsWith('https://') 
-      ? icon 
-      : url(icon))
-  : icon;
+const iconSrc = isCustomIcon
+	? icon.startsWith("http://") || icon.startsWith("https://")
+		? icon
+		: url(icon)
+	: icon;
 ---
 
 <span 

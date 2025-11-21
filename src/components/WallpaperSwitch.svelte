@@ -1,16 +1,24 @@
 <script lang="ts">
-import { WALLPAPER_FULLSCREEN, WALLPAPER_BANNER, WALLPAPER_NONE } from "@constants/constants.ts";
-import Icon from "@iconify/svelte";
 import {
-    getStoredWallpaperMode,
-    setWallpaperMode,
-} from "@utils/setting-utils.ts";
-import type { WALLPAPER_MODE } from "@/types/config.ts";
+	WALLPAPER_BANNER,
+	WALLPAPER_FULLSCREEN,
+	WALLPAPER_NONE,
+} from "@constants/constants.ts";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import Icon from "@iconify/svelte";
+import {
+	getStoredWallpaperMode,
+	setWallpaperMode,
+} from "@utils/setting-utils.ts";
+import type { WALLPAPER_MODE } from "@/types/config.ts";
 import { panelManager } from "../utils/panel-manager.js";
 
-const seq: WALLPAPER_MODE[] = [WALLPAPER_BANNER, WALLPAPER_FULLSCREEN, WALLPAPER_NONE];
+const seq: WALLPAPER_MODE[] = [
+	WALLPAPER_BANNER,
+	WALLPAPER_FULLSCREEN,
+	WALLPAPER_NONE,
+];
 let mode: WALLPAPER_MODE = $state(getStoredWallpaperMode());
 
 function switchWallpaperMode(newMode: WALLPAPER_MODE) {
@@ -30,8 +38,8 @@ function toggleWallpaperMode() {
 
 async function togglePanel() {
 	// 关闭其他面板,但保留壁纸面板本身
-	await panelManager.closeAllPanelsExcept('wallpaper-mode-panel');
-	await panelManager.togglePanel('wallpaper-mode-panel');
+	await panelManager.closeAllPanelsExcept("wallpaper-mode-panel");
+	await panelManager.togglePanel("wallpaper-mode-panel");
 }
 </script>
 

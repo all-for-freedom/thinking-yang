@@ -70,7 +70,6 @@ let volumeBar: HTMLElement;
 
 const localPlaylist: PlaylistItem[] = [];
 
-
 function togglePlay() {
 	if (!audio || !currentSong.url) return;
 	if (isPlaying) {
@@ -150,7 +149,6 @@ function playSong(index: number) {
 		}, 100);
 	}
 }
-
 
 function loadSong(song: typeof currentSong) {
 	if (!song || !audio) return;
@@ -276,10 +274,10 @@ onMount(async () => {
 	if (!musicPlayerConfig.enable) {
 		return;
 	}
-	
+
 	// 从 JSON 文件加载播放列表
 	try {
-		const playlistUrl = getAssetPath('/assets/music/playlist.json');
+		const playlistUrl = getAssetPath("/assets/music/playlist.json");
 		const response = await fetch(playlistUrl);
 		if (response.ok) {
 			const loadedPlaylist: PlaylistItem[] = await response.json();
@@ -293,7 +291,7 @@ onMount(async () => {
 			showErrorMessage("无法加载播放列表");
 		}
 	} catch (error) {
-		console.error('加载播放列表失败:', error);
+		console.error("加载播放列表失败:", error);
 		showErrorMessage("加载播放列表失败");
 	}
 });
