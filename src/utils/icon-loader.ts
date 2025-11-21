@@ -8,6 +8,7 @@ interface IconifyLoadOptions {
 }
 
 class IconLoader {
+	// biome-ignore lint/correctness/noUnusedPrivateClassMembers: Used in getInstance() for singleton pattern
 	private static instance: IconLoader | null = null;
 	private isLoaded = false;
 	private isLoading = false;

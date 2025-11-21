@@ -11,6 +11,7 @@ export interface AnimationConfig {
 }
 
 export class AnimationManager {
+	// biome-ignore lint/correctness/noUnusedPrivateClassMembers: Used in getInstance() for singleton pattern
 	private static instance: AnimationManager | null = null;
 	private isAnimating = false;
 	private animationQueue: (() => void)[] = [];
