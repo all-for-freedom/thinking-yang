@@ -121,8 +121,8 @@ async function getPanelManager() {
     }
 }
 
-function createSettingHandler(panelManager: { togglePanel: (id: string) => Promise<boolean> } | null) {
-    return async function(e: Event) {
+function createSettingHandler(panelManager) {
+    return async function(e) {
         e.preventDefault();
         e.stopPropagation();
         
@@ -147,8 +147,8 @@ function createSettingHandler(panelManager: { togglePanel: (id: string) => Promi
     };
 }
 
-function createMenuHandler(panelManager: { togglePanel: (id: string) => Promise<boolean> } | null) {
-    return async function(e: Event) {
+function createMenuHandler(panelManager) {
+    return async function(e) {
         e.preventDefault();
         e.stopPropagation();
         
@@ -433,7 +433,9 @@ if (document.readyState === 'loading') {
 }
 </script>
 
-{import.meta.env.PROD && <script is:inline define:vars={{scriptUrl: url('/pagefind/pagefind.js')}}>
+{import.meta.env.PROD && (() => {
+    const scriptUrl = url('/pagefind/pagefind.js');
+    return <script is:inline>
 function loadPagefind() {
     // 检查是否已经加载
     if (window.pagefind) {
@@ -493,4 +495,5 @@ if (document.readyState === 'loading') {
 } else {
     loadPagefind();
 }
-</script>}
+</script>;
+})()}
