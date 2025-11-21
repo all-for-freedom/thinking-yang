@@ -80,6 +80,7 @@
 		"@biomejs/biome": "2.3.6",
 		"@iconify-json/mdi": "^1.2.3",
 		"@rollup/plugin-yaml": "^4.1.2",
+		"@types/crypto-js": "^4.2.2",
 		"@types/hast": "^3.0.4",
 		"@types/markdown-it": "^14.1.2",
 		"@types/mdast": "^4.0.4",

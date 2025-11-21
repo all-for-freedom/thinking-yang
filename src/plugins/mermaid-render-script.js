@@ -108,8 +108,7 @@
 		element.appendChild(controls);
 
 		controls.addEventListener("click", (ev) => {
-			const action =
-				ev.target.getAttribute && ev.target.getAttribute("data-action");
+			const action = ev.target?.getAttribute?.("data-action");
 			if (!action) return;
 
 			switch (action) {
@@ -161,7 +160,9 @@
 			isPanning = false;
 			try {
 				wrapper.releasePointerCapture(ev.pointerId);
-			} catch (e) {}
+			} catch {
+				// Ignore errors when releasing pointer capture
+			}
 		});
 
 		wrapper.addEventListener("pointercancel", () => {

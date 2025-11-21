@@ -230,7 +230,7 @@ export class AnimationManager {
 	): void {
 		const { stagger = 50, ...animationConfig } = config;
 
-		elements.forEach((element, index) => {
+		elements.forEach((element: Element, index: number) => {
 			this.createAnimation(element as HTMLElement, {
 				...animationConfig,
 				delay: (animationConfig.delay || 0) + index * stagger,
