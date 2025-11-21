@@ -180,6 +180,16 @@ export default defineConfig({
 		],
 	},
 	vite: {
+		optimizeDeps: {
+			// 强制预构建 Svelte 相关依赖，确保组件能正常水合
+			include: [
+				'svelte',
+				'svelte/internal',
+				'@iconify/svelte',
+			],
+			// 排除不需要优化的依赖
+			exclude: [],
+		},
 		build: {
 			rollupOptions: {
 				onwarn(warning, warn) {

@@ -88,7 +88,7 @@ let links: NavBarLink[] = navBarConfig.links.map(
     </div>
 </div>
 
-<script>
+<script is:inline>
 function switchTheme() {
     if (localStorage.theme === 'dark') {
         document.documentElement.classList.remove('dark');
@@ -98,52 +98,261 @@ function switchTheme() {
         localStorage.theme = 'dark';
     }
 }
+</script>
 
-async function loadButtonScript() {
+<script type="module">
+// 全局变量跟踪初始化状态
+let buttonHandlersInitialized = false;
+let initializationAttempts = 0;
+const MAX_INIT_ATTEMPTS = 50;
+
+async function getPanelManager() {
+    // 优先使用全局 panelManager
+    if (window.panelManager) {
+        return window.panelManager;
+    }
+    
     try {
-        // 导入面板管理器
-        const { panelManager } = await import('../utils/panel-manager.js');
-        
-        let settingBtn = document.getElementById("display-settings-switch");
-        if (settingBtn) {
-            settingBtn.onclick = async function () {
-                await panelManager.togglePanel('display-setting');
-            };
-        }
-
-        let menuBtn = document.getElementById("nav-menu-switch");
-        if (menuBtn) {
-            menuBtn.onclick = async function () {
-                await panelManager.togglePanel('nav-menu-panel');
-            };
-        }
+        const module = await import('../utils/panel-manager.js');
+        return module.panelManager;
     } catch (error) {
-        console.error('Failed to load panel manager:', error);
-        // 备用逻辑
-        let settingBtn = document.getElementById("display-settings-switch");
-        if (settingBtn) {
-            settingBtn.onclick = function () {
-                let settingPanel = document.getElementById("display-setting");
-                if (settingPanel) {
-                    settingPanel.classList.toggle("float-panel-closed");
-                }
-            };
-        }
-
-        let menuBtn = document.getElementById("nav-menu-switch");
-        if (menuBtn) {
-            menuBtn.onclick = function () {
-                let menuPanel = document.getElementById("nav-menu-panel");
-                if (menuPanel) {
-                    menuPanel.classList.toggle("float-panel-closed");
-                }
-            };
-        }
+        console.warn('Failed to import panel manager:', error);
+        return null;
     }
 }
 
-loadButtonScript();
+function createSettingHandler(panelManager) {
+    return async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (panelManager) {
+            try {
+                await panelManager.togglePanel('display-setting');
+            } catch (err) {
+                console.error('Failed to toggle display setting panel:', err);
+                // 备用逻辑
+                const panel = document.getElementById("display-setting");
+                if (panel) {
+                    panel.classList.toggle("float-panel-closed");
+                }
+            }
+        } else {
+            // 备用逻辑
+            const panel = document.getElementById("display-setting");
+            if (panel) {
+                panel.classList.toggle("float-panel-closed");
+            }
+        }
+    };
+}
 
+function createMenuHandler(panelManager) {
+    return async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (panelManager) {
+            try {
+                await panelManager.togglePanel('nav-menu-panel');
+            } catch (err) {
+                console.error('Failed to toggle nav menu panel:', err);
+                // 备用逻辑
+                const panel = document.getElementById("nav-menu-panel");
+                if (panel) {
+                    panel.classList.toggle("float-panel-closed");
+                }
+            }
+        } else {
+            // 备用逻辑
+            const panel = document.getElementById("nav-menu-panel");
+            if (panel) {
+                panel.classList.toggle("float-panel-closed");
+            }
+        }
+    };
+}
+
+async function bindButtonEvents() {
+    const settingBtn = document.getElementById("display-settings-switch");
+    const menuBtn = document.getElementById("nav-menu-switch");
+    
+    // 如果按钮不存在，返回 false
+    if (!settingBtn && !menuBtn) {
+        return false;
+    }
+    
+    // 获取 panelManager
+    const panelManager = await getPanelManager();
+    
+    // 绑定事件处理器
+    if (settingBtn) {
+        // 移除旧的事件监听器（如果有）
+        settingBtn.replaceWith(settingBtn.cloneNode(true));
+        const newSettingBtn = document.getElementById("display-settings-switch");
+        if (newSettingBtn) {
+            newSettingBtn.onclick = createSettingHandler(panelManager);
+        }
+    }
+    
+    if (menuBtn) {
+        // 移除旧的事件监听器（如果有）
+        menuBtn.replaceWith(menuBtn.cloneNode(true));
+        const newMenuBtn = document.getElementById("nav-menu-switch");
+        if (newMenuBtn) {
+            newMenuBtn.onclick = createMenuHandler(panelManager);
+        }
+    }
+    
+    return true;
+}
+
+async function initButtonHandlers() {
+    if (buttonHandlersInitialized) {
+        return;
+    }
+    
+    initializationAttempts++;
+    
+    if (initializationAttempts > MAX_INIT_ATTEMPTS) {
+        console.warn('Max initialization attempts reached for navbar buttons');
+        return;
+    }
+    
+    const success = await bindButtonEvents();
+    
+    if (success) {
+        buttonHandlersInitialized = true;
+        console.log('Navbar buttons initialized successfully');
+    } else {
+        // 如果按钮还不存在，稍后重试
+        setTimeout(initButtonHandlers, 100);
+    }
+}
+
+// 检查 Svelte 组件是否已水合
+function checkSvelteComponentsReady() {
+    // 检查是否有 Svelte 组件的标记
+    // 这些组件应该在 DOM 中存在
+    const searchComponent = document.querySelector('#search-bar, [id^="search"]');
+    const lightDarkSwitch = document.querySelector('button[aria-label*="theme" i], button[aria-label*="Theme" i]');
+    const layoutSwitch = document.querySelector('button[aria-label*="layout" i], button[aria-label*="Layout" i]');
+    const wallpaperSwitch = document.querySelector('button[aria-label*="wallpaper" i], button[aria-label*="Wallpaper" i]');
+    
+    // 检查至少有一个组件存在
+    const hasComponents = searchComponent !== null || 
+                          lightDarkSwitch !== null || 
+                          layoutSwitch !== null || 
+                          wallpaperSwitch !== null;
+    
+    if (hasComponents) {
+        console.log('Svelte components detected:', {
+            search: !!searchComponent,
+            lightDark: !!lightDarkSwitch,
+            layout: !!layoutSwitch,
+            wallpaper: !!wallpaperSwitch
+        });
+    }
+    
+    return hasComponents;
+}
+
+// 初始化函数
+async function startInit() {
+    // 等待 DOM 就绪
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initButtonHandlers, 300);
+        });
+    } else {
+        setTimeout(initButtonHandlers, 300);
+    }
+    
+    // 等待 Svelte 组件水合
+    let svelteCheckAttempts = 0;
+    const maxSvelteChecks = 50;
+    const checkSvelte = setInterval(() => {
+        svelteCheckAttempts++;
+        const componentsReady = checkSvelteComponentsReady();
+        
+        if (componentsReady || svelteCheckAttempts >= maxSvelteChecks) {
+            clearInterval(checkSvelte);
+            if (!buttonHandlersInitialized) {
+                setTimeout(initButtonHandlers, 100);
+            }
+            if (!componentsReady && svelteCheckAttempts >= maxSvelteChecks) {
+                console.warn('Svelte components may not have hydrated properly. Some navbar components may not be visible.');
+            }
+        }
+    }, 100);
+}
+
+// 处理页面刷新
+let isFirstLoad = true;
+function reinitializeOnRefresh() {
+    if (isFirstLoad) {
+        isFirstLoad = false;
+        return;
+    }
+    
+    // 重置状态
+    buttonHandlersInitialized = false;
+    initializationAttempts = 0;
+    
+    // 重新初始化
+    setTimeout(initButtonHandlers, 100);
+}
+
+// 监听 pageshow 事件（包括刷新）
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        // 页面从缓存恢复
+        reinitializeOnRefresh();
+    }
+});
+
+// 监听 load 事件
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        if (!buttonHandlersInitialized) {
+            reinitializeOnRefresh();
+        }
+    }, 500);
+});
+
+// 开始初始化
+startInit();
+
+// 监听 Swup 页面转换
+function setupSwupListeners() {
+    if (typeof window !== 'undefined' && window.swup) {
+        window.swup.hooks.on('content:replace', () => {
+            buttonHandlersInitialized = false;
+            initializationAttempts = 0;
+            setTimeout(initButtonHandlers, 200);
+        });
+        
+        window.swup.hooks.on('page:view', () => {
+            if (!buttonHandlersInitialized) {
+                setTimeout(initButtonHandlers, 200);
+            }
+        });
+        
+        console.log('Swup navbar button listeners registered');
+    } else {
+        // 如果 Swup 尚未初始化，延迟重试
+        setTimeout(() => {
+            if (typeof window !== 'undefined' && window.swup) {
+                setupSwupListeners();
+            }
+        }, 1000);
+    }
+}
+
+setTimeout(setupSwupListeners, 500);
+</script>
+
+<script is:inline>
 // 为semifull模式添加滚动检测逻辑
 function initSemifullScrollDetection() {
     const navbar = document.getElementById('navbar');
@@ -224,33 +433,59 @@ if (document.readyState === 'loading') {
 }
 </script>
 
-{import.meta.env.PROD && <script define:vars={{scriptUrl: url('/pagefind/pagefind.js')}}>
-async function loadPagefind() {
-    try {
-        const response = await fetch(scriptUrl, { method: 'HEAD' });
-        if (!response.ok) {
-            throw new Error(`Pagefind script not found: ${response.status}`);
-        }
-
-        const pagefind = await import(scriptUrl);
-
-        await pagefind.options({
-            excerptLength: 20
-        });
-
-        window.pagefind = pagefind;
-
+{import.meta.env.PROD && <script is:inline define:vars={{scriptUrl: url('/pagefind/pagefind.js')}}>
+function loadPagefind() {
+    // 检查是否已经加载
+    if (window.pagefind) {
         document.dispatchEvent(new CustomEvent('pagefindready'));
-        console.log('Pagefind loaded and initialized successfully, event dispatched.');
-    } catch (error) {
-        console.error('Failed to load Pagefind:', error);
+        return;
+    }
+
+    // 使用动态 script 标签加载模块脚本
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = scriptUrl;
+    
+    script.onload = function() {
+        // 等待模块初始化
+        setTimeout(async () => {
+            try {
+                // Pagefind 模块加载后会自动暴露到 window.pagefind
+                if (window.pagefind && window.pagefind.options) {
+                    await window.pagefind.options({
+                        excerptLength: 20
+                    });
+                    document.dispatchEvent(new CustomEvent('pagefindready'));
+                    console.log('Pagefind loaded and initialized successfully, event dispatched.');
+                } else {
+                    console.warn('Pagefind not found on window object, providing fallback');
+                    window.pagefind = {
+                        search: () => Promise.resolve({ results: [] }),
+                        options: () => Promise.resolve(),
+                    };
+                    document.dispatchEvent(new CustomEvent('pagefindloaderror'));
+                }
+            } catch (err) {
+                console.error('Failed to initialize Pagefind:', err);
+                window.pagefind = {
+                    search: () => Promise.resolve({ results: [] }),
+                    options: () => Promise.resolve(),
+                };
+                document.dispatchEvent(new CustomEvent('pagefindloaderror'));
+            }
+        }, 200);
+    };
+    
+    script.onerror = function() {
+        console.error('Failed to load Pagefind script');
         window.pagefind = {
             search: () => Promise.resolve({ results: [] }),
             options: () => Promise.resolve(),
         };
         document.dispatchEvent(new CustomEvent('pagefindloaderror'));
-        console.log('Pagefind load error, event dispatched.');
-    }
+    };
+    
+    document.head.appendChild(script);
 }
 
 if (document.readyState === 'loading') {
