@@ -7,8 +7,13 @@ declare global {
 
 	interface Window {
 		// Define swup type directly since @swup/astro doesn't export AstroIntegration
-		swup: any;
-		pagefind: {
+		swup?: {
+			hooks: {
+				on: (event: string, handler: (...args: unknown[]) => void) => void;
+				off: (event: string, handler: (...args: unknown[]) => void) => void;
+			};
+		};
+		pagefind?: {
 			search: (query: string) => Promise<{
 				results: Array<{
 					data: () => Promise<SearchResult>;
@@ -17,10 +22,18 @@ declare global {
 		};
 
 		mobileTOCInit?: () => void;
+		closeAnnouncement?: () => void;
+		iconifyLoaded?: boolean;
+		initSemifullScrollDetection?: () => void;
+		__iconifyLoader?: {
+			load: () => Promise<void>;
+		};
 	}
 
 	interface Document {
-		startViewTransition?: (callback?: () => void | Promise<void>) => ViewTransition;
+		startViewTransition?: (
+			callback?: () => void | Promise<void>,
+		) => ViewTransition;
 	}
 
 	interface ViewTransition {
@@ -56,3 +69,5 @@ interface SearchResult {
 	raw_url?: string;
 	sub_results?: SearchResult[];
 }
+
+export {};
