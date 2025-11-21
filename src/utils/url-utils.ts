@@ -1,6 +1,6 @@
+import type { CollectionEntry } from "astro:content";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import type { CollectionEntry } from "astro:content";
 
 export function pathsEqual(path1: string, path2: string) {
 	const normalizedPath1 = path1.replace(/^\/|\/$/g, "").toLowerCase();
@@ -19,7 +19,7 @@ export function getPostUrlBySlug(slug: string): string {
 
 export function getPostUrlByPermalink(permalink: string): string {
 	// 移除开头的斜杠并确保固定链接在 /posts/ 路径下
-	const cleanPermalink = permalink.replace(/^\/+/, '');
+	const cleanPermalink = permalink.replace(/^\/+/, "");
 	return url(`/posts/${cleanPermalink}/`);
 }
 

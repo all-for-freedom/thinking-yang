@@ -6,7 +6,13 @@ export interface Project {
 	title: string;
 	description: string;
 	image: string;
-	category: "web" | "mobile" | "desktop" | "plugin" | "development tool" | "other";
+	category:
+		| "web"
+		| "mobile"
+		| "desktop"
+		| "plugin"
+		| "development tool"
+		| "other";
 	techStack: string[];
 	status: "completed" | "in-progress" | "planned";
 	liveDemo?: string;
@@ -22,8 +28,7 @@ export const projectsData: Project[] = [
 	{
 		id: "thinking-yang",
 		title: "Thinking Yang",
-		description:
-			"Self Blog Website",
+		description: "Self Blog Website",
 		image: "",
 		category: "web",
 		techStack: ["Astro", "TypeScript", "Tailwind CSS", "Svelte"],
@@ -39,8 +44,7 @@ export const projectsData: Project[] = [
 	{
 		id: "auto-header-template",
 		title: "Auto Header Template",
-		description:
-			"Auto Header Template for VS Code and Cursor",
+		description: "Auto Header Template for VS Code and Cursor",
 		image: "",
 		category: "plugin",
 		techStack: ["TypeScript"],
@@ -56,8 +60,7 @@ export const projectsData: Project[] = [
 	{
 		id: "balta-toolkit",
 		title: "Baltamatica Toolkit",
-		description:
-			"A small collection of tools for Baltamatica",
+		description: "A small collection of tools for Baltamatica",
 		image: "",
 		category: "plugin",
 		techStack: ["C++", "C"],
@@ -73,8 +76,7 @@ export const projectsData: Project[] = [
 	{
 		id: "balta-operators",
 		title: "Baltamatica Operators",
-		description:
-			"A small collection of lops for Baltamatica",
+		description: "A small collection of lops for Baltamatica",
 		image: "",
 		category: "plugin",
 		techStack: ["C++", "C"],
@@ -90,8 +92,7 @@ export const projectsData: Project[] = [
 	{
 		id: "scriptperf",
 		title: "Script Performance",
-		description:
-			"A tool for measuring the performance of scripts",
+		description: "A tool for measuring the performance of scripts",
 		image: "",
 		category: "development tool",
 		techStack: ["Python"],
@@ -107,8 +108,7 @@ export const projectsData: Project[] = [
 	{
 		id: "bounce_boardgame",
 		title: "Bounce Boardgame",
-		description:
-			"A boardgame about bouncing balls together",
+		description: "A boardgame about bouncing balls together",
 		image: "",
 		category: "mobile",
 		techStack: ["Dart", "Kotlin", "Swift", "C++", "C"],

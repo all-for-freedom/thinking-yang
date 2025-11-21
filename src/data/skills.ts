@@ -6,7 +6,13 @@ export interface Skill {
 	name: string;
 	description: string;
 	icon: string; // Iconify icon name
-	category: "Scientific Computing"| "frontend" | "backend" | "database" | "tools" | "other";
+	category:
+		| "Scientific Computing"
+		| "frontend"
+		| "backend"
+		| "database"
+		| "tools"
+		| "other";
 	level: "beginner" | "intermediate" | "advanced" | "expert";
 	experience: {
 		years: number;
@@ -136,7 +142,6 @@ export const skillsData: Skill[] = [
 		projects: ["bounce_boardgame"],
 		color: "#0175C2",
 	},
-	
 
 	// Backend Skills
 	{
@@ -356,7 +361,6 @@ export const skillsData: Skill[] = [
 		experience: { years: 2, months: 0 },
 		color: "#D83B01",
 	},
-	
 ];
 
 // Get skill statistics
@@ -369,7 +373,9 @@ export const getSkillStats = () => {
 		expert: skillsData.filter((s) => s.level === "expert").length,
 	};
 	const byCategory = {
-		"Scientific Computing": skillsData.filter((s) => s.category === "Scientific Computing").length,
+		"Scientific Computing": skillsData.filter(
+			(s) => s.category === "Scientific Computing",
+		).length,
 		frontend: skillsData.filter((s) => s.category === "frontend").length,
 		backend: skillsData.filter((s) => s.category === "backend").length,
 		database: skillsData.filter((s) => s.category === "database").length,

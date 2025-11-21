@@ -30,4 +30,3 @@ export interface AlbumGroup {
 	columns?: number;
 	photos: Photo[];
 }
-
