@@ -12,6 +12,8 @@ declare global {
 				on: (event: string, handler: (...args: unknown[]) => void) => void;
 				off: (event: string, handler: (...args: unknown[]) => void) => void;
 			};
+			preload?: (url: string) => void;
+			navigate?: (url: string, options?: { history?: boolean }) => void;
 		};
 		pagefind?: {
 			search: (query: string) => Promise<{
@@ -27,6 +29,17 @@ declare global {
 		initSemifullScrollDetection?: () => void;
 		__iconifyLoader?: {
 			load: () => Promise<void>;
+		};
+		panelManager?: {
+			togglePanel: (id: string, forceState?: boolean) => Promise<boolean>;
+			closePanel: (id: string) => Promise<void>;
+			closeAllPanelsExcept: (exceptPanelId?: string) => Promise<void>;
+		};
+		siteConfig?: {
+			toc?: {
+				useJapaneseBadge?: boolean;
+				depth?: number;
+			};
 		};
 	}
 }

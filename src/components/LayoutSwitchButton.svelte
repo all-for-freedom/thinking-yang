@@ -104,8 +104,8 @@ onMount(() => {
 
 	// 监听Swup页面切换事件
 	function setupSwupListeners() {
-		if (typeof window !== "undefined" && (window as any).swup) {
-			const swup = (window as any).swup;
+		if (typeof window !== "undefined" && window.swup) {
+			const swup = window.swup;
 
 			swup.hooks.on("content:replace", handleSwupEvent);
 			swup.hooks.on("page:view", handleSwupEvent);
@@ -125,8 +125,8 @@ onMount(() => {
 	return () => {
 		window.removeEventListener("layoutInit", handleLayoutInit as EventListener);
 
-		if (typeof window !== "undefined" && (window as any).swup) {
-			const swup = (window as any).swup;
+		if (typeof window !== "undefined" && window.swup) {
+			const swup = window.swup;
 			swup.hooks.off("content:replace", handleSwupEvent);
 			swup.hooks.off("page:view", handleSwupEvent);
 			swup.hooks.off("animation:in:end", handleSwupEvent);
