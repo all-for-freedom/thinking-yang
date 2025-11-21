@@ -27,7 +27,7 @@ const navTitleMap: Record<string, string> = {
 const getLocalizedName = (name: string): string => {
 	const keyValue = navTitleMap[name];
 	if (keyValue) {
-		return i18n(keyValue);
+		return i18n(keyValue as I18nKey);
 	}
 	return name;
 };
@@ -68,21 +68,24 @@ const processedLinks = Astro.props.links.map(
                         />
                     </button>
                     <div class="mobile-submenu" data-mobile-submenu>
-                        {link.children.map((child) => (
-                            <a href={child.external ? child.url : url(child.url)} 
-                               class="group flex justify-between items-center py-2 pl-6 pr-1 rounded-lg gap-8
-                                   hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition"
-                               target={child.external ? "_blank" : null}
-                            >
-                                <div class="flex items-center transition text-black/60 dark:text-white/60 font-medium group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
-                                    {child.icon && <Icon name={child.icon} class="text-[1.1rem] mr-2" />}
-                                    {getLocalizedName(child.name)}
-                                </div>
-                                {child.external && <Icon name="fa6-solid:arrow-up-right-from-square"
-                                      class="transition text-[0.75rem] text-black/25 dark:text-white/25 -translate-x-1"
-                                />}
-                            </a>
-                        ))}
+                        {link.children.map((child) => {
+                            const childLink = typeof child === "number" ? LinkPresets[child] : child;
+                            return (
+                                <a href={childLink.external ? childLink.url : url(childLink.url)} 
+                                   class="group flex justify-between items-center py-2 pl-6 pr-1 rounded-lg gap-8
+                                       hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition"
+                                   target={childLink.external ? "_blank" : undefined}
+                                >
+                                    <div class="flex items-center transition text-black/60 dark:text-white/60 font-medium group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
+                                        {childLink.icon && <Icon name={childLink.icon} class="text-[1.1rem] mr-2" />}
+                                        {getLocalizedName(childLink.name)}
+                                    </div>
+                                    {childLink.external && <Icon name="fa6-solid:arrow-up-right-from-square"
+                                          class="transition text-[0.75rem] text-black/25 dark:text-white/25 -translate-x-1"
+                                    />}
+                                </a>
+                            );
+                        })}
                     </div>
                 </div>
             ) : (

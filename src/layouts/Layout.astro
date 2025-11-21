@@ -693,7 +693,7 @@ function initCarousel() {
 const setup = () => {
 	// TODO: temp solution to change the height of the banner
 /*
-	window.swup.hooks.on('animation:out:start', () => {
+	window.swup?.hooks.on('animation:out:start', () => {
 		const path = window.location.pathname
 		const body = document.querySelector('body')
 		if (path[path.length - 1] === '/' && !body.classList.contains('is-home')) {
@@ -703,7 +703,7 @@ const setup = () => {
 		}
 	})
 */
-	window.swup.hooks.on('link:click', () => {
+	window.swup?.hooks.on('link:click', () => {
 		// Remove the delay for the first time page load
 		document.documentElement.style.setProperty('--content-delay', '0ms')
 
@@ -718,7 +718,7 @@ const setup = () => {
 			}
 		}
 	})
-	window.swup.hooks.on('content:replace', () => {
+	window.swup?.hooks.on('content:replace', () => {
 		// 只处理新的katex元素的滚动条，使用原生CSS滚动条
 		initCustomScrollbar();
 		
@@ -758,7 +758,7 @@ const setup = () => {
 			}
 		}
 	})
-	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
+	window.swup?.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
 		const isHomePage = pathsEqual(visit.to.url, url('/'))
@@ -829,7 +829,7 @@ const setup = () => {
 			toc.classList.add('toc-not-ready')
 		}
 	});
-	window.swup.hooks.on('page:view', () => {
+	window.swup?.hooks.on('page:view', () => {
 		// hide the temp high element when the transition is done
 		const heightExtend = document.getElementById('page-height-extend')
 		if (heightExtend) {
@@ -883,7 +883,7 @@ const setup = () => {
 			}
 		}, 300);
 	});
-	window.swup.hooks.on('visit:end', (_visit: {to: {url: string}}) => {
+	window.swup?.hooks.on('visit:end', (_visit: {to: {url: string}}) => {
 		setTimeout(() => {
 			const heightExtend = document.getElementById('page-height-extend')
 			if (heightExtend) {
@@ -1008,7 +1008,8 @@ import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 // 使用单例模式避免重复初始化
-let fancyboxInstances = [];
+// @ts-expect-error - Fancybox.bind returns void but we track instances
+let fancyboxInstances: any[] = [];
 
 function initFancybox() {
   // 不需要关闭所有实例，只需检查是否已经初始化
@@ -1061,6 +1062,7 @@ function initFancybox() {
   };
   
   // 为相册图片添加 Fancybox 支持
+  // @ts-expect-error - Fancybox type definitions may not match actual API
   fancyboxInstances.push(
     Fancybox.bind(".custom-md img, #post-cover img, .moment-images img", {
       ...commonConfig,
@@ -1073,16 +1075,18 @@ function initFancybox() {
   );
   
   // 为相册中的链接添加 Fancybox 支持
+  // @ts-expect-error - Fancybox type definitions may not match actual API
   fancyboxInstances.push(
     Fancybox.bind(".moment-images a[data-fancybox]", {
       ...commonConfig,
-      source: (el) => {
+      source: (el: any) => {
         return el.getAttribute("data-src") || el.getAttribute("href");
       },
     })
   );
   
   // 为单独的 fancybox 图片添加支持
+  // @ts-expect-error - Fancybox type definitions may not match actual API
   fancyboxInstances.push(
     Fancybox.bind("[data-fancybox]:not(.moment-images a)", commonConfig)
   );
