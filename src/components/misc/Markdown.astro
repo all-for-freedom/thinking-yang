@@ -98,6 +98,7 @@ document.addEventListener("click", function (e: MouseEvent) {
                 textArea.select();
                 
                 try {
+                    // @ts-expect-error execCommand is deprecated but we still use it as a fallback for legacy browsers
                     const successful = document.execCommand('copy');
                     if (!successful) {
                         throw new Error('execCommand 返回 false');
