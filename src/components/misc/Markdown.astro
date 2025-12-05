@@ -79,36 +79,9 @@ document.addEventListener("click", function (e: MouseEvent) {
             return '\n'.repeat(resultEmptyLines + 1);
         });
         
-        // 尝试多种复制方法
+        // 使用现代 Clipboard API 复制文本
         const copyToClipboard = async (text: string) => {
-            try {
-                // 优先使用 Clipboard API
-                await navigator.clipboard.writeText(text);
-            } catch (clipboardErr) {
-                console.warn('Clipboard API 失败，尝试备用方案:', clipboardErr);
-                
-                // 备用方案：使用 document.execCommand
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                textArea.style.position = 'fixed';
-                textArea.style.left = '-999999px';
-                textArea.style.top = '-999999px';
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                
-                try {
-                    const successful = document.execCommand('copy');
-                    if (!successful) {
-                        throw new Error('execCommand 返回 false');
-                    }
-                } catch (execErr) {
-                    console.error('execCommand 也失败了:', execErr);
-                    throw new Error('所有复制方法都失败了');
-                } finally {
-                    document.body.removeChild(textArea);
-                }
-            }
+            await navigator.clipboard.writeText(text);
         };
         
         copyToClipboard(code).then(() => {
