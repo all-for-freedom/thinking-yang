@@ -16,12 +16,7 @@ import {
 	sidebarLayoutConfig,
 	siteConfig,
 } from "../config";
-import {
-	BANNER_HEIGHT,
-	BANNER_HEIGHT_EXTEND,
-	BANNER_HEIGHT_HOME,
-	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
-} from "../constants/constants";
+import { BANNER_HEIGHT, BANNER_HEIGHT_EXTEND } from "../constants/constants";
 import { widgetManager } from "../utils/widget-manager";
 import Layout from "./Layout.astro";
 
@@ -34,21 +29,6 @@ interface Props {
 	postSlug?: string;
 	headings?: MarkdownHeading[];
 }
-
-// 类型守卫函数
-const isBannerSrcObject = (
-	src:
-		| string
-		| string[]
-		| { desktop?: string | string[]; mobile?: string | string[] },
-): src is { desktop?: string | string[]; mobile?: string | string[] } => {
-	return (
-		typeof src === "object" &&
-		src !== null &&
-		!Array.isArray(src) &&
-		("desktop" in src || "mobile" in src)
-	);
-};
 
 // 获取banner图片的辅助函数
 const getBannerImages = async () => {
@@ -118,7 +98,6 @@ const mainPanelTop =
 	siteConfig.wallpaperMode.defaultMode === "banner"
 		? `${BANNER_HEIGHT}vh`
 		: "5.5rem";
-const mobileNonHomeMainTop = !isHomePage ? "5.5rem" : mainPanelTop;
 
 // 当默认模式不是 banner 时，主内容区域应该始终从顶栏下面开始
 const finalMainPanelTop =
@@ -207,12 +186,6 @@ const transparentClass = shouldEnableTransparency
 		const wallpaperMode = localStorage.getItem('wallpaperMode') || defaultWallpaperMode;
 		const body = document.body;
 		
-		// 定义 banner 高度常量（与 constants.ts 保持一致）
-		const BANNER_HEIGHT = 35;
-		const BANNER_HEIGHT_EXTEND = 30;
-		const BANNER_HEIGHT_HOME = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
-		const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
-		
 		// 立即应用 body 类，确保首次渲染就是正确的状态
 		switch(wallpaperMode) {
 			case 'banner':
@@ -300,9 +273,6 @@ const transparentClass = shouldEnableTransparency
 		});
 	})();
 	
-	// 根据壁纸模式动态设置 banner 和全屏壁纸的显示
-	const wallpaperMode = localStorage.getItem('wallpaperMode') || defaultWallpaperMode;
-	
 	// 在 DOM 加载后执行
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', applyWallpaperMode);
@@ -317,12 +287,6 @@ const transparentClass = shouldEnableTransparency
 		const navbar = document.getElementById('navbar');
 		const body = document.body;
 		const mainContent = document.querySelector('.absolute.w-full.z-30.pointer-events-none');
-		
-		// 定义 banner 高度常量（与 constants.ts 保持一致）
-		const BANNER_HEIGHT = 35;
-		const BANNER_HEIGHT_EXTEND = 30;
-		const BANNER_HEIGHT_HOME = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
-		const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
 		
 		switch(wallpaperMode) {
 			case 'banner':
@@ -401,7 +365,7 @@ const transparentClass = shouldEnableTransparency
 	}
 	
 	// 监听壁纸模式变化，立即应用（不重载页面）
-	window.addEventListener('wallpaper-mode-change', function(event) {
+	window.addEventListener('wallpaper-mode-change', function() {
 		applyWallpaperMode();
 	});
 	

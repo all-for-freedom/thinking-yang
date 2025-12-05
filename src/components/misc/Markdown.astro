@@ -63,7 +63,7 @@ document.addEventListener("click", function (e: MouseEvent) {
             
             // 偶数空行：除以2
             // 奇数空行：(空行数+1)/2 向下取整
-            let resultEmptyLines;
+            let resultEmptyLines: number;
             if (emptyLineCount % 2 === 0) {
                 // 偶数
                 resultEmptyLines = emptyLineCount / 2;

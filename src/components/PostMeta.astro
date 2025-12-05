@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { profileConfig, umamiConfig } from "../config";
+import { umamiConfig } from "../config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import { formatDateToYYYYMMDD } from "../utils/date-utils";
@@ -25,7 +25,6 @@ export interface Props {
 	slug?: string;
 	showOnlyBasicMeta?: boolean; // 新增属性，控制是否只显示基本元数据
 	words?: number; // 字数统计
-	minutes?: number; // 阅读时间（分钟）
 	showWordCount?: boolean; // 是否显示字数统计
 }
 
@@ -41,7 +40,6 @@ const {
 	slug,
 	showOnlyBasicMeta = false, // 默认为false，保持原有行为
 	words,
-	minutes,
 	showWordCount = false, // 默认不显示字数统计
 } = Astro.props;
 ---
@@ -126,14 +124,14 @@ const {
 
 <!-- 只有在非首页且启用umami且有slug时才加载脚本 -->
 {!isHome && umamiEnabled && slug && (
-    <script define:vars={{ slug, umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiConfig }}>
+    <script is:inline define:vars={{ slug, umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiConfig }}>
         // 客户端统计文案生成函数
         function generateStatsText(pageViews, visitors) {
             return `浏览量 ${pageViews} · 访客 ${visitors}`;
         }
         
         // 获取访问量统计
-        async function fetchPageViews(isRetry = false) {
+        async function fetchPageViews(_isRetry = false) {
             if (!umamiConfig.enabled) {
                 return;
             }

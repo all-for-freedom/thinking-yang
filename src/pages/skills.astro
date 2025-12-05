@@ -21,8 +21,6 @@ if (!siteConfig.featurePages.skills) {
 	return Astro.redirect("/404/");
 }
 
-const { lang } = Astro.props;
-
 // 获取技能统计信息
 const stats = getSkillStats();
 const advancedSkills = getAdvancedSkills();
@@ -99,9 +97,6 @@ const subtitle = i18n(I18nKey.skillsSubtitle);
 
 // 收集所有技能图标用于预加载
 const allIcons = skillsData.map((skill) => skill.icon).filter(Boolean);
-
-// 进度条动画状态
-let animated = false;
 ---
 
 <MainGridLayout title={title} description={subtitle}>

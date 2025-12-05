@@ -88,19 +88,8 @@ let links: NavBarLink[] = navBarConfig.links.map(
     </div>
 </div>
 
-<script is:inline>
-function switchTheme() {
-    if (localStorage.theme === 'dark') {
-        document.documentElement.classList.remove('dark');
-        localStorage.theme = 'light';
-    } else {
-        document.documentElement.classList.add('dark');
-        localStorage.theme = 'dark';
-    }
-}
-</script>
 
-<script type="module">
+<script is:inline type="module">
 // 全局变量跟踪初始化状态
 let buttonHandlersInitialized = false;
 let initializationAttempts = 0;
@@ -434,8 +423,8 @@ if (document.readyState === 'loading') {
 </script>
 
 {import.meta.env.PROD && (() => {
-    const scriptUrl = url('/pagefind/pagefind.js');
-    return <script is:inline>
+    const pagefindScriptUrl = url('/pagefind/pagefind.js');
+    return <script is:inline define:vars={{ pagefindScriptUrl }}>
 function loadPagefind() {
     // 检查是否已经加载
     if (window.pagefind) {
@@ -446,7 +435,7 @@ function loadPagefind() {
     // 使用动态 script 标签加载模块脚本
     const script = document.createElement('script');
     script.type = 'module';
-    script.src = scriptUrl;
+    script.src = pagefindScriptUrl;
     
     script.onload = function() {
         // 等待模块初始化

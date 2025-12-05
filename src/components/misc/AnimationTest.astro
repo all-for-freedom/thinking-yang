@@ -72,24 +72,6 @@
     }, 50);
   }
 
-  function testSlideOut() {
-    const content = document.getElementById('test-content');
-    if (!content) return;
-    
-    content.className = 'test-content transition-slide-out is-active';
-    
-    setTimeout(() => {
-      content.classList.add('is-leaving');
-    }, 50);
-  }
-
-  function resetAnimation() {
-    const content = document.getElementById('test-content');
-    if (!content) return;
-    
-    content.className = 'test-content transition-slide-in is-active';
-  }
-
   // 页面加载时自动触发滑入动画
   document.addEventListener('DOMContentLoaded', () => {
     setTimeout(testSlideIn, 300);

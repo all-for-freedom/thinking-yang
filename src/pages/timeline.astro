@@ -4,7 +4,6 @@ import IconifyLoader from "../components/misc/IconifyLoader.astro";
 import { siteConfig } from "../config";
 import {
 	getCurrentItems,
-	getFeaturedTimeline,
 	getTimelineByType,
 	getTimelineStats,
 	getTotalWorkExperience,
@@ -19,8 +18,6 @@ if (!siteConfig.featurePages.timeline) {
 	return Astro.redirect("/404/");
 }
 
-const { lang } = Astro.props;
-
 // 收集所有时间线图标用于预加载
 const allIcons = timelineData
 	.map((item) => item.icon || getTypeIcon(item.type))
@@ -28,7 +25,6 @@ const allIcons = timelineData
 
 // 获取时间线统计信息
 const stats = getTimelineStats();
-const featuredItems = getFeaturedTimeline();
 const currentItems = getCurrentItems();
 const workExperience = getTotalWorkExperience();
 
@@ -48,22 +44,6 @@ const getTypeIcon = (type: string) => {
 			return "material-symbols:emoji-events";
 		default:
 			return "material-symbols:event";
-	}
-};
-
-// 类型颜色映射
-const getTypeColor = (type: string) => {
-	switch (type) {
-		case "education":
-			return "bg-blue-500";
-		case "work":
-			return "bg-green-500";
-		case "project":
-			return "bg-purple-500";
-		case "achievement":
-			return "bg-orange-500";
-		default:
-			return "bg-gray-500";
 	}
 };
 

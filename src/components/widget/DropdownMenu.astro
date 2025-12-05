@@ -158,15 +158,15 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 			trigger.addEventListener('keydown', function(e: KeyboardEvent) {
 				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault();
-					toggleDropdown(dropdown, trigger, menu);
+					toggleDropdown(trigger, menu);
 				} else if (e.key === 'ArrowDown') {
 					e.preventDefault();
-					openDropdown(dropdown, trigger, menu);
+					openDropdown(trigger, menu);
 					if (items.length > 0) {
 						(items[0] as HTMLElement).focus();
 					}
 				} else if (e.key === 'Escape') {
-					closeDropdown(dropdown, trigger, menu);
+					closeDropdown(trigger, menu);
 				}
 			});
 			
@@ -182,7 +182,7 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 						const prevIndex = (index - 1 + items.length) % items.length;
 						(items[prevIndex] as HTMLElement).focus();
 					} else if (e.key === 'Escape') {
-						closeDropdown(dropdown, trigger, menu);
+						closeDropdown(trigger, menu);
 						(trigger as HTMLElement).focus();
 					}
 				});
@@ -195,30 +195,30 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 				if (e.target instanceof Node && !dropdown.contains(e.target)) {
 					const trigger = dropdown.querySelector('[data-dropdown-trigger]');
 					const menu = dropdown.querySelector('[data-dropdown-menu]');
-					if (trigger && menu) {
-						closeDropdown(dropdown, trigger, menu);
-					}
+				if (trigger && menu) {
+					closeDropdown(trigger, menu);
+				}
 				}
 			});
 		});
 	});
 	
-	function toggleDropdown(dropdown, trigger, menu) {
+	function toggleDropdown(trigger: Element, menu: Element) {
 		const isOpen = trigger.getAttribute('aria-expanded') === 'true';
 		if (isOpen) {
-			closeDropdown(dropdown, trigger, menu);
+			closeDropdown(trigger, menu);
 		} else {
-			openDropdown(dropdown, trigger, menu);
+			openDropdown(trigger, menu);
 		}
 	}
 	
-	function openDropdown(dropdown, trigger, menu) {
+	function openDropdown(trigger: Element, menu: Element) {
 		trigger.setAttribute('aria-expanded', 'true');
 		menu.classList.remove('opacity-0', 'invisible', 'pointer-events-none', 'translate-y-[-8px]');
 		menu.classList.add('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0');
 	}
 	
-	function closeDropdown(dropdown, trigger, menu) {
+	function closeDropdown(trigger: Element, menu: Element) {
 		trigger.setAttribute('aria-expanded', 'false');
 		menu.classList.add('opacity-0', 'invisible', 'pointer-events-none', 'translate-y-[-8px]');
 		menu.classList.remove('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0');

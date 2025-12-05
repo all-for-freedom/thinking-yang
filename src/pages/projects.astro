@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import { siteConfig } from "../config";
 import { UNCATEGORIZED } from "../constants/constants";
 import {
@@ -18,8 +17,6 @@ import { loadIconify } from "../utils/icon-loader";
 if (!siteConfig.featurePages.projects) {
 	return Astro.redirect("/404/");
 }
-
-const { lang } = Astro.props;
 
 // 加载Iconify图标库
 loadIconify().catch((error) => {

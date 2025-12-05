@@ -6,7 +6,7 @@ import "@fontsource/roboto/700.css";
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import MusicPlayer from "@components/widget/MusicPlayer.svelte";
 import { musicPlayerConfig, profileConfig, siteConfig } from "@/config";
-import { umamiConfig, widgetConfigs } from "../config";
+import { umamiConfig } from "../config";
 import {
 	BANNER_HEIGHT,
 	BANNER_HEIGHT_EXTEND,
@@ -277,8 +277,8 @@ if (siteConfig.font) {
 		<!-- Umami Analytics -->
 		{umamiEnabled && umamiScripts && <Fragment set:html={umamiScripts} />}
 
-		<script src={url("js/timeline-scroll-handler.js")} defer></script>
-		<script src={url("js/skills-progress-handler.js")} defer></script>
+		<script is:inline src={url("js/timeline-scroll-handler.js")} defer></script>
+		<script is:inline src={url("js/skills-progress-handler.js")} defer></script>
 </head>
 	<body class=" min-h-screen " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 		  style={bodyFontFamily ? `font-family: ${bodyFontFamily};` : ''}
@@ -350,26 +350,16 @@ if (siteConfig.font) {
 </style>
 
 <script>
-import { animationManager } from '../utils/animation-utils';
 import 'overlayscrollbars/overlayscrollbars.css';
-import {
-	OverlayScrollbars,
-	// ScrollbarsHidingPlugin,
-	// SizeObserverPlugin,
-	// ClickScrollPlugin
-} from 'overlayscrollbars';
-import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
 import {pathsEqual, url} from "../utils/url-utils";
 import {
 	BANNER_HEIGHT,
 	BANNER_HEIGHT_HOME,
 	BANNER_HEIGHT_EXTEND,
-	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 	DARK_MODE,
 	DEFAULT_THEME
 } from "../constants/constants";
 import { siteConfig } from '../config';
-import { widgetConfigs } from "../config";
 
 /* Preload fonts */
 // (async function() {
@@ -424,8 +414,7 @@ async function initializePanelManager() {
 		
 		function setClickOutsideToClose(panel: string, ignores: string[]) {
 			document.addEventListener("click", async event => {
-				let panelDom = document.getElementById(panel);
-				let tDom = event.target;
+				const tDom = event.target;
 				if (!(tDom instanceof Node)) return;		// Ensure the event target is an HTML Node
 				for (let ig of ignores) {
 					let ie = document.getElementById(ig)
@@ -451,15 +440,6 @@ async function initializePanelManager() {
 
 initializePanelManager();
 
-
-function loadTheme() {
-	const theme = getStoredTheme()
-	setTheme(theme)
-}
-
-function loadHue() {
-	setHue(getHue())
-}
 
 function initCustomScrollbar() {
 	// 完全禁用OverlayScrollbars的body初始化，避免导致页面重新加载
@@ -550,7 +530,7 @@ function initCarousel() {
 	// Check if carousel is disabled but we have multiple images - show random image
 	if (validItems.length > 1 && !siteConfig.banner.carousel?.enable) {
 		// Hide all images first
-		carouselItems.forEach((item, index) => {
+		carouselItems.forEach((item) => {
 			item.classList.add('opacity-0', 'scale-110');
 			item.classList.remove('opacity-100', 'scale-100');
 		});
@@ -567,7 +547,7 @@ function initCarousel() {
 	if (validItems.length > 1 && siteConfig.banner.carousel?.enable) {
 		let currentIndex = 0;
 		const interval = siteConfig.banner.carousel?.interval || 6;
-		let carouselInterval;
+		let carouselInterval: ReturnType<typeof setInterval> | undefined;
 		let isPaused = false;
 
 		// 移动端触摸手势支持
@@ -577,7 +557,7 @@ function initCarousel() {
 		const carousel = document.getElementById('banner-carousel');
 
 		// 切换图片的函数 - 基于有效项目
-		function switchToSlide(index) {
+		function switchToSlide(index: number) {
 			// 隐藏当前图片
 			const currentItem = validItems[currentIndex];
 			currentItem.classList.remove('opacity-100', 'scale-100');
@@ -974,7 +954,7 @@ if (document.readyState === 'loading') {
 		showBanner();
 		// 初始化面板管理器
 		try {
-			const { panelManager } = await import('../utils/panel-manager.js');
+			await import('../utils/panel-manager.js');
 			console.log('Panel manager initialized');
 		} catch (error) {
 			console.error('Failed to initialize panel manager:', error);
@@ -985,7 +965,7 @@ if (document.readyState === 'loading') {
 	// 页面已经加载完成，立即初始化面板管理器
 	(async () => {
 		try {
-			const { panelManager } = await import('../utils/panel-manager.js');
+			await import('../utils/panel-manager.js');
 			console.log('Panel manager initialized');
 		} catch (error) {
 			console.error('Failed to initialize panel manager:', error);
