@@ -12,7 +12,7 @@ importers:
         specifier: ^0.9.6
         version: 0.9.6(prettier@3.7.1)(typescript@5.9.3)
       '@astrojs/rss':
-        specifier: ^4.0.13
+        specifier: 4.0.14
         version: 4.0.14
       '@astrojs/sitemap':
         specifier: ^3.6.0
